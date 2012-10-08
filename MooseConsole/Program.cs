@@ -22,10 +22,10 @@ namespace MooseConsole
             {
                 TextTimeLogParser parser = new TextTimeLogParser();
                 parser.Parse(line);
-                WorkingDayCalculator day = new WorkingDayCalculator();
-                day.AddStartTime(parser.StartTime);
-                day.AddEndTime(parser.EndTime);
-                var hours = day.CalculateWorkingHours();
+                WorkingDayCalculator calc = new WorkingDayCalculator();
+                calc.AddStartTime(parser.StartTime);
+                calc.AddEndTime(parser.EndTime);
+                var hours = calc.CalculateWorkingHours();
 
                 TimesheetTextAppender writer = new TimesheetTextAppender(Console.Out);
                 writer.Write(hours);

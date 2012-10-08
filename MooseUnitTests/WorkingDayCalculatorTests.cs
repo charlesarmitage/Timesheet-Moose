@@ -24,8 +24,7 @@ namespace MooseUnitTests
 
         private static DateTime CreateTimeOfDay(int hours, int minutes)
         {
-            DateTime time = DateTime.Now.Date + new TimeSpan(hours, minutes, 0);
-            return time;
+            return DateTime.Now.Date + new TimeSpan(hours, minutes, 0);
         }
 
         [Test]
@@ -186,19 +185,19 @@ namespace MooseUnitTests
         {
             DateTime _9_00 = CreateTimeOfDay(9, 00);
             DateTime _17_00 = CreateTimeOfDay(17, 00);
+            DateTime _20_00 = CreateTimeOfDay(20, 00);
+            DateTime _21_00 = CreateTimeOfDay(21, 00);
+            
             calc.AddStartTime(_9_00);
             calc.AddEndTime(_17_00);
-
-            var _20_00 = CreateTimeOfDay(20, 00);
-            var _21_00 = CreateTimeOfDay(21, 00);
             calc.AddStartTime(_20_00);
             calc.AddEndTime(_21_00);
-
             var day = calc.CalculateWorkingHours();
+
             Assert.That(day.StartTime, Is.EqualTo(_9_00));
             Assert.That(day.EndTime, Is.EqualTo(_17_00));
-            Assert.That(day.PotentialStartTimes().Count() > 0);
-            Assert.That(day.PotentialEndTimes().Count() > 0);
+            Assert.That(day.PotentialStartTimes().LastOrDefault(), Is.EqualTo(_20_00));
+            Assert.That(day.PotentialEndTimes().LastOrDefault(), Is.EqualTo(_21_00));
         }
     }
 }

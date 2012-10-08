@@ -29,33 +29,29 @@ namespace Moose
 
         public WorkingHours CalculateWorkingHours()
         {
-            // Use null coalising operator
-            var startTime = new DateTime();
-            if (unnormalizedStartTimes.Count > 0)
-            {
-                startTime = StartHoursNormalizer.NormalizeStartTime(unnormalizedStartTimes[0]);
-            }
-
-            var endTime = new DateTime();
-            if (unnormalizedEndTimes.Count > 0)
-            {
-                endTime = EndHoursNormalizer.NormalizeEndTime(unnormalizedEndTimes[0]);
-            }
+            DateTime startTime = unnormalizedStartTimes.FirstOrDefault();
+            startTime = StartHoursNormalizer.NormalizeStartTime(startTime);
+            DateTime endTime = unnormalizedEndTimes.FirstOrDefault();
+            endTime = EndHoursNormalizer.NormalizeEndTime(endTime);
 
             var hours = new WorkingHours(startTime, endTime);
+            AddPotentialWorkingHours(hours);
 
-            foreach(DateTime start in unnormalizedStartTimes)
+            // Execute scripts
+            return hours;
+        }
+
+        private void AddPotentialWorkingHours(WorkingHours hours)
+        {
+            foreach (DateTime start in unnormalizedStartTimes)
             {
                 hours.AddPotentialStartTime(StartHoursNormalizer.NormalizeStartTime(start));
             }
 
             foreach (DateTime end in unnormalizedEndTimes)
             {
-                hours.AddPotentialEndTime(EndHoursNormalizer.NormalizeEndTime(endTime));
+                hours.AddPotentialEndTime(EndHoursNormalizer.NormalizeEndTime(end));
             }
-
-            // Execute scripts
-            return hours;
         }
 
         /*private void LoadAndRunScript()
@@ -98,5 +94,9 @@ namespace Moose
                 }
             }
         }*/
+
+        public void SetStrategy(string strategyScript)
+        {
+        }
     }
 }
