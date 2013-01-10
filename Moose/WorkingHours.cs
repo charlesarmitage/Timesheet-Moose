@@ -17,6 +17,7 @@ namespace Moose
             this.StartTime = start;
             this.EndTime = end;
         }
+        
         public DateTime StartTime { get; private set; }
         public DateTime EndTime { get; private set; }
 
@@ -30,14 +31,20 @@ namespace Moose
             return potentialEndTimes;
         }
 
-        internal void AddPotentialStartTime(DateTime dateTime)
+        public void AddPotentialStartTime(DateTime dateTime)
         {
             potentialStartTimes.Add(dateTime);
         }
 
-        internal void AddPotentialEndTime(DateTime dateTime)
+        public void AddPotentialEndTime(DateTime dateTime)
         {
             potentialEndTimes.Add(dateTime);
+        }
+
+        public override string ToString()
+        {
+            string output = string.Format("{0}: {1}, {2}", StartTime.Date, StartTime.TimeOfDay, EndTime.TimeOfDay);
+            return output;
         }
     }
 }

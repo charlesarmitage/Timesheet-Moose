@@ -33,8 +33,7 @@ namespace MooseUnitTests
         [Test]
         public void ParserCanParseDateFromIndividualLogLine()
         {
-            TextTimeLogParser parser = new TextTimeLogParser();
-            parser.Parse("12/06/12 In: 09:00 Out: 17:00");
+            TextTimeLogParser parser = new TextTimeLogParser("12/06/12 In: 09:00 Out: 17:00");
             DateTime date = parser.StartTime;
             Assert.That(date.Date, Is.EqualTo(new DateTime(2012, 06, 12).Date));
         }
@@ -42,8 +41,7 @@ namespace MooseUnitTests
         [Test]
         public void ParserCanParseStartTimeFromIndividualLogLine()
         {
-            TextTimeLogParser parser = new TextTimeLogParser();
-            parser.Parse("12/06/12 In: 09:00 Out: 17:00");
+            TextTimeLogParser parser = new TextTimeLogParser("12/06/12 In: 09:00 Out: 17:00");
             DateTime time = parser.StartTime;
             Assert.That(time.TimeOfDay, Is.EqualTo(new DateTime(2012, 06, 12, 09, 00, 00).TimeOfDay));
         }
@@ -51,8 +49,7 @@ namespace MooseUnitTests
         [Test]
         public void ParserCanParseEndTimeFromIndividualLogLine()
         {
-            TextTimeLogParser parser = new TextTimeLogParser();
-            parser.Parse("12/06/12 In: 09:00 Out: 17:00");
+            TextTimeLogParser parser = new TextTimeLogParser("12/06/12 In: 09:00 Out: 17:00");
             DateTime time = parser.EndTime;
             Assert.That(time.TimeOfDay, Is.EqualTo(new DateTime(2012, 06, 12, 17, 00, 00).TimeOfDay));
         }
@@ -60,8 +57,7 @@ namespace MooseUnitTests
         [Test]
         public void ParserCanParseStartAndEndTimeToMinutesFromIndividualLogLine()
         {
-            TextTimeLogParser parser = new TextTimeLogParser();
-            parser.Parse("12/06/12 In: 09:23 Out: 17:23");
+            TextTimeLogParser parser = new TextTimeLogParser("12/06/12 In: 09:23 Out: 17:23");
             DateTime time = parser.EndTime;
             Assert.That(time.TimeOfDay, Is.EqualTo(new DateTime(2012, 06, 12, 17, 23, 00).TimeOfDay));
         }
@@ -69,24 +65,24 @@ namespace MooseUnitTests
         [Test]
         public void ParserThrowsAnExceptionIfTextIsInvalid()
         {
-            TextTimeLogParser parser = new TextTimeLogParser();
-            Assert.Throws<InvalidTimeTextException>(()=> parser.Parse("Invalid text"));
-            Assert.Throws<InvalidTimeTextException>(()=> parser.Parse("27/08/12 Invalid text"));
+            Assert.Throws<InvalidTimeTextException>(()=> new TextTimeLogParser("Invalid text"));
+            Assert.Throws<InvalidTimeTextException>(() => new TextTimeLogParser("Invalid text"));
+            Assert.Throws<InvalidTimeTextException>(() => new TextTimeLogParser("27/08/12 Invalid text"));
         }
 
         [Test]
         public void ParserAnIncompleteDayHasAnInvalidEndTime()
         {
-            TextTimeLogParser parser = new TextTimeLogParser();
-            Assert.DoesNotThrow(() => parser.Parse("27/08/12 In: 09:00 Out:"));
+            TextTimeLogParser parser = null;
+            Assert.DoesNotThrow(() => parser = new TextTimeLogParser("27/08/12 In: 09:00 Out:"));
             Assert.That(parser.EndTime.TimeOfDay, Is.EqualTo(new TimeSpan(0,0,0)));
         }
 
         [Test]
         public void ParserAnDayWithNoOutTimeHasAnInvalidEndTime()
         {
-            TextTimeLogParser parser = new TextTimeLogParser();
-            Assert.DoesNotThrow(() => parser.Parse("27/08/12 In: 09:00 "));
+            TextTimeLogParser parser = null;
+            Assert.DoesNotThrow(() => parser = new TextTimeLogParser("27/08/12 In: 09:00 "));
             Assert.That(parser.EndTime.TimeOfDay, Is.EqualTo(new TimeSpan(0, 0, 0)));
         }
     }

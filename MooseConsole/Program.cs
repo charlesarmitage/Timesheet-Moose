@@ -20,8 +20,7 @@ namespace MooseConsole
             var lines = reader.ReadAllLines();
             foreach(var line in lines)
             {
-                TextTimeLogParser parser = new TextTimeLogParser();
-                parser.Parse(line);
+                TextTimeLogParser parser = new TextTimeLogParser(line);
                 WorkingDayCalculator calc = new WorkingDayCalculator();
                 calc.AddStartTime(parser.StartTime);
                 calc.AddEndTime(parser.EndTime);

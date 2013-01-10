@@ -8,6 +8,11 @@ namespace Moose
 {
     public class TextTimeLogParser
     {
+        public TextTimeLogParser(string line)
+        {
+            Parse(line);
+        }
+
         public void Parse(string line)
         {
             string d = ParseDate(line);
