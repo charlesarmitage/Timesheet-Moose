@@ -77,10 +77,14 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="TestSamples\SimpleLog.log" />
+    <None Include="SimpleLog.log">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="TestSamples\WriterTestOutput.txt" />
+    <Content Include="WriterTestOutput.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -13,14 +13,14 @@ namespace MooseUnitTests
         [Test]
         public void TextTimeLogReaderIsATypeOfTimeLogReader()
         {
-            TimeLogReader reader = new TextTimeLogReader(@".\TestSamples\SimpleLog.log");
+            TimeLogReader reader = new TextTimeLogReader(@"SimpleLog.log");
             Assert.That(reader is TimeLogReader);
         }
 
         [Test]
         public void ReaderReadsAllLinesFromTextFile()
         {
-            TextTimeLogReader reader = new TextTimeLogReader(@"..\..\TestSamples\SimpleLog.log");
+            TextTimeLogReader reader = new TextTimeLogReader(@"SimpleLog.log");
             var lines = reader.ReadAllLines();
             Assert.That(lines.Count(), Is.EqualTo(5));
             Assert.That(lines.ElementAt(0), Is.EqualTo("12/06/12 In: 09:00 Out: 17:00"));

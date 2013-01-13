@@ -19,8 +19,8 @@ namespace MooseUnitTests
         [SetUp]
         public void Setup()
         {
-            File.WriteAllText(@"..\..\TestSamples\WriterTestOutput.txt", "");
-            outfile = new StreamWriter(@"..\..\TestSamples\WriterTestOutput.txt");
+            File.WriteAllText("WriterTestOutput.txt", "");
+            outfile = new StreamWriter("WriterTestOutput.txt");
             writer = new TimesheetTextAppender(outfile);
             monday = GetMonday();
             tuesday = new WorkingDayCalculator();
@@ -63,12 +63,12 @@ namespace MooseUnitTests
 
         private string[] GetText()
         {
-            return File.ReadAllLines(@"..\..\TestSamples\WriterTestOutput.txt");
+            return File.ReadAllLines("WriterTestOutput.txt");
         }
 
         private static WorkingDayCalculator GetMonday()
         {
-            WorkingDayCalculator firstDay = new WorkingDayCalculator();
+            var firstDay = new WorkingDayCalculator();
             firstDay.AddStartTime(new DateTime(2012, 08, 06, 09, 00, 00));
             firstDay.AddEndTime(new DateTime(2012, 08, 06, 17, 00, 00));
             return firstDay;

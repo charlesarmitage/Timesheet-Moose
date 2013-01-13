@@ -43,7 +43,7 @@ namespace Moose
 
         public override string ToString()
         {
-            string output = string.Format("{0}: {1}, {2}", StartTime.Date, StartTime.TimeOfDay, EndTime.TimeOfDay);
+            string output = string.Format("{0:dd/MM/yy}: {1}, {2}", StartTime.Date, StartTime.TimeOfDay, EndTime.TimeOfDay);
             return output;
         }
     }
