@@ -148,6 +148,26 @@ namespace MooseXLSReportsTests
             }
         }
 
+        [Test]
+        public void ShouldReturnMinValueDateTimeWhenReadingEndTimeFromAnEmptyCell()
+        {
+            using (var report = new XlsReport(TestTimesheet))
+            {
+                var readTime = report.ReadEndTime(new DateTime(2012, 12, 19));
+                Assert.That(readTime, Is.EqualTo(DateTime.MinValue));
+            }
+        }
+
+        [Test]
+        public void ShouldReturnMinValueDateTimeWhenReadingStartTimeFromAnEmptyCell()
+        {
+            using (var report = new XlsReport(TestTimesheet))
+            {
+                var readTime = report.ReadStartTime(new DateTime(2012, 12, 19));
+                Assert.That(readTime, Is.EqualTo(DateTime.MinValue));
+            }
+        }
+
         private static dynamic GetValueFromCell(string filename, string sheet, string cell)
         {
             var timesheet = new FileInfo(filename);

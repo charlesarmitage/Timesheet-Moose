@@ -37,31 +37,41 @@ namespace MooseXLSReports
         public void WriteStartTime(DateTime startTime)
         {
             var cell = GetStartTimeCell(startTime);
-            cell.Value = string.Format("{0:hh}:{0:mm}", startTime);
+            cell.Value = string.Format("{0:HH}:{0:mm}", startTime);
         }
 
         public void WriteEndTime(DateTime endTime)
         {
             var cell = GetEndTimeCell(endTime);
-            cell.Value = string.Format("{0:hh}:{0:mm}", endTime);
+            cell.Value = string.Format("{0:HH}:{0:mm}", endTime);
         }
 
         public DateTime ReadStartTime(DateTime date)
         {
             var cell = GetStartTimeCell(date);
-            var timeOfDay = ConvertToDateTime(cell.Value);
-
-            var readDate = new DateTime(date.Year, date.Month, date.Day) + timeOfDay;
-            return readDate;
+            var value = cell.Value;
+            if (value != null)
+            {
+                return ConvertToDateTime(date, cell.Value);
+            }
+            else
+            {
+                return DateTime.MinValue;
+            }
         }
 
         public DateTime ReadEndTime(DateTime date)
         {
             var cell = GetEndTimeCell(date);
-            var timeOfDay = ConvertToDateTime(cell.Value);
-
-            var readDate = new DateTime(date.Year, date.Month, date.Day) + timeOfDay;
-            return readDate;
+            var value = cell.Value;
+            if (value != null)
+            {
+                return ConvertToDateTime(date, cell.Value);
+            }
+            else
+            {
+                return DateTime.MinValue;
+            }
         }
 
         private dynamic GetStartTimeCell(DateTime startTime)
@@ -87,10 +97,12 @@ namespace MooseXLSReports
             return actualCell;
         }
 
-        private static TimeSpan ConvertToDateTime(double excelTime)
+        private static DateTime ConvertToDateTime(DateTime date, double excelTime)
         {
             double time = excelTime * 24.0 * 60.0;
-            return TimeSpan.FromMinutes(time);
+            var timeOfDay = TimeSpan.FromMinutes(time);
+            var readDate = new DateTime(date.Year, date.Month, date.Day) + timeOfDay;
+            return readDate;
         }
     }
 }
