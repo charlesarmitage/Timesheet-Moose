@@ -12,7 +12,6 @@ class ReportWriter():
 			self.accessor.WriteStartTime(hours.StartTime)
 
 		if self.is_end_time_empty(hours):
-			print hours.EndTime
 			self.accessor.WriteEndTime(hours.EndTime)
 
 	def is_start_time_empty(self, date):
