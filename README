@@ -1,0 +1,10 @@
+Timesheet-Moose
+---------------
+
+Born out of two desires - one learn some Python and IronPython. Two, automatically fill in my timesheet for work.
+
+A simple set of scripts for logging possible working hours (when a work machine is turned on and off) and format them for use in a timesheet spreadsheet.
+
+The logger application - MooseLogger, simply notes the time that the program starts up and shuts down to a text file. Add MooseLogger to the start up programs to start it automatically.
+
+The Moosepy script reads the text file and parses the start and end times. Then the times are rounded to the most suitable 15 minute interval (as per the requirements for filling in the timesheet). The most like estimate of working hours is printed out along with other options. Finally, the times can be automatically added to a spreadsheet.
