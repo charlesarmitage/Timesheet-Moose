@@ -5,24 +5,27 @@ import datetime
 import time
 
 def parsedate(line):
-    pattern = r"../../.."
-    match = re.search(pattern, line)
-    date = datetime.datetime.strptime(match.group(0), "%m/%d/%Y")
-    return date
+    match = re.search(r"../../..", line)
+    if match != None:
+        return datetime.datetime.strptime(match.group(0), "%m/%d/%Y")
+    return None
+
+def extracttime(match, prefix):
+    t = match.lstrip(prefix)
+    starttime = datetime.datetime.strptime(t, "%H:%M")
+    return starttime.time()    
 
 def parsestarttime(line):
-    pattern = r"In:......"
-    match = re.search(pattern, line)
-    t = match.group(0).lstrip('In: ')
-    starttime = datetime.datetime.strptime(t, "%H:%M")
-    return starttime.time()
+    match = re.search(r"In:......", line)
+    if match != None:
+        return extracttime(match.group(0), 'In: ')
+    return None
 
 def parseendtime(line):
-    pattern = r"Out:.*"
-    match = re.search(pattern, line)
-    t = match.group(0).lstrip('Out:')
-    starttime = datetime.datetime.strptime(t, "%H:%M")
-    return starttime.time()
+    match = re.search(r"Out:.*", line)
+    if match != None:
+        return extracttime(match.group(0), 'Out:')
+    return None
 
 class TestLogReader(unittest.TestCase):
 
@@ -49,3 +52,20 @@ class TestLogReader(unittest.TestCase):
         line = "12/18/12 In: 09:00 Out: 17:00"
         endtime = parseendtime(line)
         assert endtime == datetime.time(17, 0, 0)
+
+    def test_can_parse_startandendtime_from_line(self):
+        line = "12/18/12 In: 09:23 Out: 17:45"
+        starttime = parsestarttime(line)
+        endtime = parseendtime(line)
+        assert starttime == datetime.time(9, 23, 0)
+        assert endtime == datetime.time(17, 45, 0)
+
+    def test_returns_none_for_invalid_line(self):
+        line = "Invalid line"
+        date = parsedate(line)
+        starttime = parsestarttime(line)
+        endtime = parseendtime(line)
+
+        assert date == None
+        assert starttime == None
+        assert endtime == None
