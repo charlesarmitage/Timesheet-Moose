@@ -14,13 +14,15 @@ import hours_aggregation
 import hours_filtering
 import reportoutput
 from System import DayOfWeek
+import hours_input
 
 def read_hours():   
     logFile = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\Timesheet.log"
     print 'Using: %s' % logFile
-    reader = Moose.TextTimeLogReader(logFile)
-    rawLines = reader.ReadAllLines()
-    return [Moose.TextTimeLogParser(line) for line in rawLines]
+    log = open(logFile, 'r')
+    lines = log.readlines()
+    log.close()
+    return hours_input.parse(lines)
 
 def get_estimated_hours(hours):
     estimated = [hours_estimator.estimate_hours(working_hours) for working_hours in hours]
@@ -35,11 +37,12 @@ def print_hours(days):
     weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
     
     for day in days:
-        date = datetime.datetime(day[0].StartTime.Date)
-        print '\n%s, %s: Options: %i' % (date.date(), weekdays[date.weekday()], len(day))
-        print 'Estimation: %s' % (hours_estimator.estimate_hours(day))
+        date = day[0].date
+        print '\n%s, %s: Options: %i' % (date, weekdays[date.weekday()], len(day))
+        estimate = hours_estimator.estimate_hours(day)
+        print 'Estimation: %s' % estimate
         for hours in day:
-            print '\t %s %s' % (datetime.datetime(hours.StartTime).time(), datetime.datetime(hours.EndTime).time())
+            print '\t %s %s' % (hours.start, hours.end)
 
 def should_write_to_report():
     print "Fill in spreadsheet? (Y/N)"
@@ -60,6 +63,7 @@ def write_hours_to_report(hours):
 
 if __name__ == '__main__':
     hours = read_hours()
+
     month = 1
     hours = hours_filtering.filter_by_month(hours, month)
     hours = hours_filtering.remove_weekends(hours)

@@ -6,7 +6,7 @@ def parsedate(line):
     match = re.search(r"../../..", line)
     day = None
     if match != None:
-        d = datetime.datetime.strptime(match.group(0), "%m/%d/%Y")
+        d = datetime.datetime.strptime(match.group(0), "%d/%m/%y")
         day = d.date()
     return day
 
@@ -30,12 +30,12 @@ def parseendtime(line):
 def parse_workingperiod(line):
     workingperiod = workinghours.WorkingHours()
     workingperiod.date = parsedate(line)
-    workingperiod.starttime = parsestarttime(line)
-    workingperiod.endtime = parseendtime(line)
+    workingperiod.start = parsestarttime(line)
+    workingperiod.end = parseendtime(line)
     return workingperiod
 
 def is_valid_period(period):
-    return period.date != None and period.starttime != None
+    return period.date != None and period.start != None
 
 def parse(lines):
     workingperiods = [parse_workingperiod(line) for line in lines]

@@ -16,9 +16,9 @@ class TestLogReader(unittest.TestCase):
         assert lines[4] == "   \n"
 
     def test_can_parse_date_from_single_line(self):
-        line = "12/18/12 In: 09:00 Out: 17:00"
+        line = "08/12/12 In: 09:00 Out: 17:00"
         date = hours_input.parsedate(line)
-        assert date == datetime.date(2012, 12, 18)
+        assert date == datetime.date(2012, 12, 8)
 
     def test_can_parse_starttime_from_single_line(self):
         line = "12/18/12 In: 09:00 Out: 17:00"
@@ -48,61 +48,61 @@ class TestLogReader(unittest.TestCase):
         assert endtime == None
 
     def test_parsing_a_line_should_produce_a_list_of_working_hours(self):
-        line = "12/18/12 In: 09:23 Out: 17:45"
+        line = "18/12/12 In: 09:23 Out: 17:45"
 
         hourslist = hours_input.parse([line])
 
         assert len(hourslist) == 1
         assert hourslist[0].date == datetime.date(2012, 12, 18)
-        assert hourslist[0].starttime == datetime.time(9, 23)
-        assert hourslist[0].endtime == datetime.time(17, 45)
+        assert hourslist[0].start == datetime.time(9, 23)
+        assert hourslist[0].end == datetime.time(17, 45)
 
     def test_parsing_a_list_of_lines_produces_a_list_of_working_periods(self):
-        lines = ["12/18/12 In: 09:23 Out: 17:45",
+        lines = ["18/12/12 In: 09:23 Out: 17:45",
                 "12/19/12 In: 09:45 Out: 17:30"]
 
         hourslist = hours_input.parse(lines)
 
         assert len(hourslist) == 2
         assert hourslist[0].date == datetime.date(2012, 12, 18)
-        assert hourslist[0].starttime == datetime.time(9, 23)
-        assert hourslist[0].endtime == datetime.time(17, 45)
+        assert hourslist[0].start == datetime.time(9, 23)
+        assert hourslist[0].end == datetime.time(17, 45)
         assert hourslist[1].date == datetime.date(2012, 12, 19)
-        assert hourslist[1].starttime == datetime.time(9, 45)
-        assert hourslist[1].endtime == datetime.time(17, 30)
+        assert hourslist[1].start == datetime.time(9, 45)
+        assert hourslist[1].end == datetime.time(17, 30)
 
     def test_parsing_a_list_with_an_invalid_date_should_ignore_the_invalid_line(self):
         lines = ["Invalid date: In: 09:23 Out: 17:45",
-                "12/19/12 In: 09:45 Out: 17:30"]
+                "19/12/12 In: 09:45 Out: 17:30"]
 
         hourslist = hours_input.parse(lines)
 
         assert len(hourslist) == 1
         assert hourslist[0].date == datetime.date(2012, 12, 19)
-        assert hourslist[0].starttime == datetime.time(9, 45)
-        assert hourslist[0].endtime == datetime.time(17, 30)
+        assert hourslist[0].start == datetime.time(9, 45)
+        assert hourslist[0].end == datetime.time(17, 30)
 
     def test_parsing_a_list_with_an_invalid_start_should_ignore_the_invalid_line(self):
         lines = ["12/18/12 Invalid Out: 17:45",
-                "12/19/12 In: 09:45 Out: 17:30"]
+                "19/12/12 In: 09:45 Out: 17:30"]
 
         hourslist = hours_input.parse(lines)
 
         assert len(hourslist) == 1
         assert hourslist[0].date == datetime.date(2012, 12, 19)
-        assert hourslist[0].starttime == datetime.time(9, 45)
-        assert hourslist[0].endtime == datetime.time(17, 30)
+        assert hourslist[0].start == datetime.time(9, 45)
+        assert hourslist[0].end == datetime.time(17, 30)
 
     def test_parsing_list_with_invalid_end_time_should_not_ignore_the_invalid_endtime(self):
-        lines = ["12/18/12 In: 09:23",
-                "12/19/12 In: 09:45 Out: 17:30"]
+        lines = ["18/12/12 In: 09:23",
+                "19/12/12 In: 09:45 Out: 17:30"]
 
         hourslist = hours_input.parse(lines)
 
         assert len(hourslist) == 2
         assert hourslist[0].date == datetime.date(2012, 12, 18)
-        assert hourslist[0].starttime == datetime.time(9, 23)
-        assert hourslist[0].endtime == None
+        assert hourslist[0].start == datetime.time(9, 23)
+        assert hourslist[0].end == None
         assert hourslist[1].date == datetime.date(2012, 12, 19)
-        assert hourslist[1].starttime == datetime.time(9, 45)
-        assert hourslist[1].endtime == datetime.time(17, 30)       
+        assert hourslist[1].start == datetime.time(9, 45)
+        assert hourslist[1].end == datetime.time(17, 30)       

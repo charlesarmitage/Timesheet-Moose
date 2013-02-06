@@ -2,13 +2,17 @@ import collections
 import unittest
 import Moose
 import hours_filtering
+import workinghours
+import datetime
 from System import DateTime
 from System import DayOfWeek
 
 def new_working_hours_on(date, start, end):
-    start_time = DateTime.Parse(date + " " + start)
-    end_time = DateTime.Parse(date + " " + end)
-    return Moose.WorkingHours(start_time, end_time)
+    hours = workinghours.WorkingHours()
+    hours.date = datetime.datetime.strptime(date, '%d/%m/%y')
+    hours.start = datetime.datetime.strptime(start, '%M:%H')
+    hours.end = datetime.datetime.strptime(end, '%M:%H')
+    return hours
 
 class TestHoursFiltering(unittest.TestCase):
 

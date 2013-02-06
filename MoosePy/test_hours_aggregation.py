@@ -3,17 +3,22 @@ import unittest
 import moosepy
 import Moose
 import hours_aggregation
+import workinghours
+import datetime
 from System import DateTime
 
 def new_working_hours_on(date, start, end):
-    start_time = DateTime.Parse(date + " " + start)
-    end_time = DateTime.Parse(date + " " + end)
-    return [ Moose.WorkingHours(start_time, end_time) ]
+    hours = workinghours.WorkingHours()
+    hours.date = datetime.datetime.strptime(date, '%d/%m/%y')
+    hours.start = datetime.datetime.strptime(start, '%H:%M')
+    hours.end = datetime.datetime.strptime(end, '%H:%M')
+    return [hours]
 
 def new_workinghours(start, end):
-    starttime = DateTime.Parse(start)
-    endtime = DateTime.Parse(end)
-    return [ Moose.WorkingHours(starttime, endtime) ]
+    hours = workinghours.WorkingHours()
+    hours.start = datetime.datetime.strptime(start, '%H:%M')
+    hours.end = datetime.datetime.strptime(end, '%H:%M')
+    return [hours]
 
 def is_single_dimension_collection(list):
     for element in list:
