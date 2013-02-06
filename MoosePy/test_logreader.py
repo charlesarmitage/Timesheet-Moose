@@ -2,29 +2,7 @@ import unittest
 import re
 import datetime
 import time
-
-def parsedate(line):
-    match = re.search(r"../../..", line)
-    if match != None:
-        return datetime.datetime.strptime(match.group(0), "%m/%d/%Y")
-    return None
-
-def extracttime(match, prefix):
-    t = match.lstrip(prefix)
-    starttime = datetime.datetime.strptime(t, "%H:%M")
-    return starttime.time()    
-
-def parsestarttime(line):
-    match = re.search(r"In:......", line)
-    if match != None:
-        return extracttime(match.group(0), 'In: ')
-    return None
-
-def parseendtime(line):
-    match = re.search(r"Out:.*", line)
-    if match != None:
-        return extracttime(match.group(0), 'Out:')
-    return None
+import hours_input
 
 class TestLogReader(unittest.TestCase):
 
@@ -39,32 +17,92 @@ class TestLogReader(unittest.TestCase):
 
     def test_can_parse_date_from_single_line(self):
         line = "12/18/12 In: 09:00 Out: 17:00"
-        date = parsedate(line)
-        assert date.date() == datetime.date(2012, 12, 18)
+        date = hours_input.parsedate(line)
+        assert date == datetime.date(2012, 12, 18)
 
     def test_can_parse_starttime_from_single_line(self):
         line = "12/18/12 In: 09:00 Out: 17:00"
-        starttime = parsestarttime(line)
+        starttime = hours_input.parsestarttime(line)
         assert starttime == datetime.time(9, 0, 0)
 
     def test_can_parse_endtime_from_single_line(self):
         line = "12/18/12 In: 09:00 Out: 17:00"
-        endtime = parseendtime(line)
+        endtime = hours_input.parseendtime(line)
         assert endtime == datetime.time(17, 0, 0)
 
     def test_can_parse_startandendtime_from_line(self):
         line = "12/18/12 In: 09:23 Out: 17:45"
-        starttime = parsestarttime(line)
-        endtime = parseendtime(line)
+        starttime = hours_input.parsestarttime(line)
+        endtime = hours_input.parseendtime(line)
         assert starttime == datetime.time(9, 23, 0)
         assert endtime == datetime.time(17, 45, 0)
 
     def test_returns_none_for_invalid_line(self):
         line = "Invalid line"
-        date = parsedate(line)
-        starttime = parsestarttime(line)
-        endtime = parseendtime(line)
+        date = hours_input.parsedate(line)
+        starttime = hours_input.parsestarttime(line)
+        endtime = hours_input.parseendtime(line)
 
         assert date == None
         assert starttime == None
         assert endtime == None
+
+    def test_parsing_a_line_should_produce_a_list_of_working_hours(self):
+        line = "12/18/12 In: 09:23 Out: 17:45"
+
+        hourslist = hours_input.parse([line])
+
+        assert len(hourslist) == 1
+        assert hourslist[0].date == datetime.date(2012, 12, 18)
+        assert hourslist[0].starttime == datetime.time(9, 23)
+        assert hourslist[0].endtime == datetime.time(17, 45)
+
+    def test_parsing_a_list_of_lines_produces_a_list_of_working_periods(self):
+        lines = ["12/18/12 In: 09:23 Out: 17:45",
+                "12/19/12 In: 09:45 Out: 17:30"]
+
+        hourslist = hours_input.parse(lines)
+
+        assert len(hourslist) == 2
+        assert hourslist[0].date == datetime.date(2012, 12, 18)
+        assert hourslist[0].starttime == datetime.time(9, 23)
+        assert hourslist[0].endtime == datetime.time(17, 45)
+        assert hourslist[1].date == datetime.date(2012, 12, 19)
+        assert hourslist[1].starttime == datetime.time(9, 45)
+        assert hourslist[1].endtime == datetime.time(17, 30)
+
+    def test_parsing_a_list_with_an_invalid_date_should_ignore_the_invalid_line(self):
+        lines = ["Invalid date: In: 09:23 Out: 17:45",
+                "12/19/12 In: 09:45 Out: 17:30"]
+
+        hourslist = hours_input.parse(lines)
+
+        assert len(hourslist) == 1
+        assert hourslist[0].date == datetime.date(2012, 12, 19)
+        assert hourslist[0].starttime == datetime.time(9, 45)
+        assert hourslist[0].endtime == datetime.time(17, 30)
+
+    def test_parsing_a_list_with_an_invalid_start_should_ignore_the_invalid_line(self):
+        lines = ["12/18/12 Invalid Out: 17:45",
+                "12/19/12 In: 09:45 Out: 17:30"]
+
+        hourslist = hours_input.parse(lines)
+
+        assert len(hourslist) == 1
+        assert hourslist[0].date == datetime.date(2012, 12, 19)
+        assert hourslist[0].starttime == datetime.time(9, 45)
+        assert hourslist[0].endtime == datetime.time(17, 30)
+
+    def test_parsing_list_with_invalid_end_time_should_not_ignore_the_invalid_endtime(self):
+        lines = ["12/18/12 In: 09:23",
+                "12/19/12 In: 09:45 Out: 17:30"]
+
+        hourslist = hours_input.parse(lines)
+
+        assert len(hourslist) == 2
+        assert hourslist[0].date == datetime.date(2012, 12, 18)
+        assert hourslist[0].starttime == datetime.time(9, 23)
+        assert hourslist[0].endtime == None
+        assert hourslist[1].date == datetime.date(2012, 12, 19)
+        assert hourslist[1].starttime == datetime.time(9, 45)
+        assert hourslist[1].endtime == datetime.time(17, 30)       
