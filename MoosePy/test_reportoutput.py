@@ -1,6 +1,5 @@
 import reportoutput
 import unittest
-import Moose
 from System import DateTime
 import datetime
 import workinghours

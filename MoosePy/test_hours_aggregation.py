@@ -1,7 +1,6 @@
 import collections
 import unittest
 import moosepy
-import Moose
 import hours_aggregation
 import workinghours
 import datetime

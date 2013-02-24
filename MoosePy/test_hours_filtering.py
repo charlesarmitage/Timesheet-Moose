@@ -1,6 +1,5 @@
 import collections
 import unittest
-import Moose
 import hours_filtering
 import workinghours
 import datetime

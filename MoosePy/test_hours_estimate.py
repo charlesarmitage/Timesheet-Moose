@@ -2,7 +2,6 @@ import unittest
 import hours_estimator
 import workinghours
 import datetime
-import Moose
 from System import DateTime
 
 def new_workinghours(start, end):
