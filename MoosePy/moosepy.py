@@ -1,9 +1,7 @@
 import sys
 import calendar
 import clr
-clr.AddReferenceToFile('moose')
 clr.AddReferenceToFile('MooseXLSReports')
-import Moose
 import MooseXLSReports
 import System
 from System import Environment

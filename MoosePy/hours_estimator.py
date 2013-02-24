@@ -1,4 +1,3 @@
-import Moose
 import workinghours
 
 def is_office_start_time(potential_start_time):

@@ -1,4 +1,3 @@
-import Moose
 from itertools import groupby
 import hours_normalization
 
