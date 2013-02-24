@@ -29,7 +29,7 @@ class TestNormalization(unittest.TestCase):
 
         assert hours.start == datetime.time(9, 0, 0)
 
-    def test_workingday_ending_at_16_43_ends_at_16_30pm(self):
+    def test_workingday_ending_at_16_33_ends_at_16_30pm(self):
         self.hours.end = datetime.time(16, 33, 0)
 
         hours = hours_normalization.normalizehours(self.hours)
@@ -63,3 +63,31 @@ class TestNormalization(unittest.TestCase):
         hours = hours_normalization.normalizehours(self.hours)
 
         assert hours.start == datetime.time(9, 00)
+
+    def test_workingday_ending_at_16_54_ends_at_4_45pm(self):
+        self.hours.end = datetime.time(16, 54)
+
+        hours = hours_normalization.normalizehours(self.hours)
+
+        assert hours.end == datetime.time(16, 45)
+
+    def test_workingday_starting_at_08_55_starts_at_9am(self):
+        self.hours.start = datetime.time(8, 55)
+
+        hours = hours_normalization.normalizehours(self.hours)
+
+        assert hours.start == datetime.time(9, 00)
+
+    def test_workingday_has_starttime_of_now_when_no_starttime_is_initialized(self):
+        self.hours.start = None
+
+        hours = hours_normalization.normalizehours(self.hours)
+
+        assert self.hours.start != None
+
+    def test_workingday_has_endtime_of_now_when_no_endtime_is_initialized(self):
+        self.hours.end = None
+
+        hours = hours_normalization.normalizehours(self.hours)
+
+        assert self.hours.end != None

@@ -64,7 +64,7 @@ def write_hours_to_report(hours):
 if __name__ == '__main__':
     hours = read_hours()
 
-    month = 1
+    month = 2
     hours = hours_filtering.filter_by_month(hours, month)
     hours = hours_filtering.remove_weekends(hours)
     hours_grouped_by_day = process_hours(hours)
