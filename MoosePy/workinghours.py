@@ -1,5 +1,10 @@
 import datetime
 
+def build_from_date(day):
+	hours = WorkingHours()
+	hours.date = day
+	return hours
+
 class WorkingHours():
 
     def __init__(self):

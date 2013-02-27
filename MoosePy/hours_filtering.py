@@ -1,6 +1,5 @@
 import collections
-from System import DateTime
-from System import DayOfWeek
+import workbooknav
 
 def filter_by_month(hours, month):
     filtered = [hour for hour in hours if hour.date.month == month]
@@ -14,3 +13,11 @@ def isduringweek(day):
 def remove_weekends(hours):
     filtered = [ day for day in hours if isduringweek(day)]
     return filtered
+
+def filter_by__current_worksheet_month(day, raw_hours):
+    workbook = workbooknav.workbooknavigator(day)
+    month = workbook.startofmonthnumber
+
+    hours = filter_by_month(raw_hours, month)
+    hours.extend( filter_by_month(raw_hours, month - 1) ) # TODO: Handle january
+    return hours

@@ -1,18 +1,13 @@
 import sys
-import calendar
-import clr
-clr.AddReferenceToFile('MooseXLSReports')
-import MooseXLSReports
 import System
 from System import Environment
-from itertools import groupby
 import datetime
 import hours_estimator
 import hours_aggregation
 import hours_filtering
 import reportoutput
-from System import DayOfWeek
 import hours_input
+import workbooknav
 
 def read_hours():   
     logFile = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\Timesheet.log"
@@ -53,17 +48,15 @@ def should_write_to_report():
 
 def write_hours_to_report(hours):
     xls_file = "C:\Users\carmitage\Documents\AdminDocs\Origin Timesheet 2013 - Copy.xlsx"
-    xls_report = MooseXLSReports.XlsReport(xls_file)
-    writer = reportoutput.ReportWriter(xls_report)
+    writer = reportoutput.build_ipy_writer(xls_file)
     for estimated_hours in hours:
         print "Written: %s" % estimated_hours
         writer.write(estimated_hours)
 
 if __name__ == '__main__':
-    hours = read_hours()
+    raw_hours = read_hours()
 
-    month = 2
-    hours = hours_filtering.filter_by_month(hours, month)
+    hours = hours_filtering.filter_by__current_worksheet_month(datetime.datetime.today(), raw_hours)
     hours = hours_filtering.remove_weekends(hours)
     hours_grouped_by_day = process_hours(hours)
     print_hours(hours_grouped_by_day)
