@@ -8,3 +8,25 @@ A simple set of scripts for logging possible working hours (when a work machine 
 The logger application - MooseLogger, simply notes the time that the program starts up and shuts down to a text file. Add MooseLogger to the start up programs to start it automatically.
 
 The Moosepy script reads the text file and parses the start and end times. Then the times are rounded to the most suitable 15 minute interval (as per the requirements for filling in the timesheet). The most like estimate of working hours is printed out along with other options. Finally, the times can be automatically added to a spreadsheet.
+
+TO DO
+------
+
+1. Build GUI front end - preferably a web app front end
+	- User should be able to view their current month's timesheet from logger data
+	- User should be able to edit the times in the timesheet
+	- User should be able to save the timesheet for later viewing
+	- User should be able to create an excel version of the timesheet
+
+2. Make front end user specific
+	- User should be able to log on and view their timesheet
+	- User should be able to log off
+
+3. Automatically fill in public holidays
+	- User should see public holidays already accounted for in timesheet
+	- User's excel version should have public holidays accounted for
+
+4. Automatically fill in holidays from online holiday tracker
+	- User can use third party holiday tracker plugin
+	- User can log in to third party holiday tracker
+	- User can import holiday information into timesheet
