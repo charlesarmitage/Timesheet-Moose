@@ -2,7 +2,7 @@ import unittest
 import re
 import datetime
 import time
-import hours_input
+from workinghours import hours_input
 
 class TestLogReader(unittest.TestCase):
 

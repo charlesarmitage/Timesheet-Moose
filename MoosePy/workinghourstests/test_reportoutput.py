@@ -2,10 +2,10 @@ import reportoutput
 import unittest
 from System import DateTime
 import datetime
-import workinghours
+from workinghours import workhours
 
 def new_workinghours(start, end):
-    hours = workinghours.WorkingHours()
+    hours = workhours.WorkingHours()
     hours.start = datetime.datetime.strptime(start, '%H:%M').time()
     hours.end = datetime.datetime.strptime(end, '%H:%M').time()
     return hours 

@@ -1,14 +1,12 @@
 import collections
 import unittest
-import hours_filtering
-import workinghours
+from workinghours import hours_filtering
+from workinghours import workhours
 import datetime
 from datetime import datetime
-from System import DateTime
-from System import DayOfWeek
 
 def new_working_hours_on(date, start, end):
-    hours = workinghours.WorkingHours()
+    hours = workhours.WorkingHours()
     hours.date = datetime.strptime(date, '%d/%m/%Y')
     hours.start = datetime.strptime(start, '%M:%H')
     hours.end = datetime.strptime(end, '%M:%H')
@@ -47,11 +45,11 @@ class TestHoursFiltering(unittest.TestCase):
     	assert len(hours) == 5
 
     def test_will_filter_dates_based_on_worksheet_months(self):
-        previousmonth = workinghours.build_from_date(datetime(2013, 2, 28))
-        previousworksheetmonth = workinghours.build_from_date(datetime(2013, 3, 15))
-        worksheetmonthstartdate = workinghours.build_from_date(datetime(2013, 3, 26))
-        nextworksheetmonthdate = workinghours.build_from_date(datetime(2013, 4, 1))
-        nextcalendarmonth = workinghours.build_from_date(datetime(2013, 5, 2))
+        previousmonth = workhours.build_from_date(datetime(2013, 2, 28))
+        previousworksheetmonth = workhours.build_from_date(datetime(2013, 3, 15))
+        worksheetmonthstartdate = workhours.build_from_date(datetime(2013, 3, 26))
+        nextworksheetmonthdate = workhours.build_from_date(datetime(2013, 4, 1))
+        nextcalendarmonth = workhours.build_from_date(datetime(2013, 5, 2))
 
         hours = [previousmonth,
                 previousworksheetmonth,

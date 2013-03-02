@@ -1,4 +1,4 @@
-import workinghours
+from workinghours import workhours
 
 def is_office_start_time(potential_start_time):
     return potential_start_time.hour >= 7 and potential_start_time.hour <= 9 
@@ -20,7 +20,7 @@ def estimate_hours(normalized_hours):
     start_time = get_estimated_start_time(normalized_hours)
     end_time = get_estimated_end_time(normalized_hours)
  
-    estimated_hours = workinghours.WorkingHours()
+    estimated_hours = workhours.WorkingHours()
     estimated_hours.date = normalized_hours[0].date
     estimated_hours.start = start_time
     estimated_hours.end = end_time

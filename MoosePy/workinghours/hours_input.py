@@ -1,6 +1,6 @@
 import datetime
 import re
-import workinghours
+from workinghours import workhours
 
 def parsedate(line):
     match = re.search(r"../../..", line)
@@ -28,7 +28,7 @@ def parseendtime(line):
     return None
 
 def parse_workingperiod(line):
-    workingperiod = workinghours.WorkingHours()
+    workingperiod = workhours.WorkingHours()
     workingperiod.date = parsedate(line)
     workingperiod.start = parsestarttime(line)
     workingperiod.end = parseendtime(line)

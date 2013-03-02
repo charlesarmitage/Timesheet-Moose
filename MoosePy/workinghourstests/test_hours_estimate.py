@@ -1,11 +1,10 @@
 import unittest
-import hours_estimator
-import workinghours
+from workinghours import hours_estimator
+from workinghours import workhours
 import datetime
-from System import DateTime
 
 def new_workinghours(start, end):
-    hours = workinghours.WorkingHours()
+    hours = workhours.WorkingHours()
     hours.start = datetime.datetime.strptime(start, '%H:%M').time()
     hours.end = datetime.datetime.strptime(end, '%H:%M').time()
     return hours

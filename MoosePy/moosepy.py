@@ -2,14 +2,14 @@ import sys
 import System
 from System import Environment
 import datetime
-import hours_estimator
-import hours_aggregation
-import hours_filtering
-import hours_normalization
-import hours_feed
-import reportoutput
-import hours_input
+from workinghours import hours_estimator
+from workinghours import hours_aggregation
+from workinghours import hours_filtering
+from workinghours import hours_normalization
+from workinghours import hours_feed
+from workinghours import hours_input
 import workbooknav
+import reportoutput
 
 def read_hours():   
     logFile = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\Timesheet.log"

@@ -1,12 +1,12 @@
 import unittest
 import datetime
-import hours_normalization
-import workinghours
+from workinghours import hours_normalization
+from workinghours import workhours
 
 class TestNormalization(unittest.TestCase):
 
     def setUp(self):
-        self.hours = workinghours.WorkingHours()
+        self.hours = workhours.WorkingHours()
 
     def test_a_workingday_that_starts_at_9_00_starts_at_9am(self):
         self.hours.start = datetime.time(9, 0, 0)

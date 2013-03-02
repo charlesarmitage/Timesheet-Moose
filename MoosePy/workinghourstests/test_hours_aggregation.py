@@ -1,20 +1,18 @@
 import collections
 import unittest
-import moosepy
-import hours_aggregation
-import workinghours
+from workinghours import hours_aggregation
+from workinghours import workhours
 import datetime
-from System import DateTime
 
 def new_working_hours_on(date, start, end):
-    hours = workinghours.WorkingHours()
+    hours = workhours.WorkingHours()
     hours.date = datetime.datetime.strptime(date, '%d/%m/%y')
     hours.start = datetime.datetime.strptime(start, '%H:%M')
     hours.end = datetime.datetime.strptime(end, '%H:%M')
     return [hours]
 
 def new_workinghours(start, end):
-    hours = workinghours.WorkingHours()
+    hours = workhours.WorkingHours()
     hours.start = datetime.datetime.strptime(start, '%H:%M')
     hours.end = datetime.datetime.strptime(end, '%H:%M')
     return [hours]

@@ -1,10 +1,10 @@
 import unittest
-import test_hours_aggregation
-import test_hours_estimate
-import test_reportoutput
-import test_hours_filtering
-import test_logreader
-import test_hoursnormalization
+from workinghourstests import test_hours_aggregation
+from workinghourstests import test_hours_estimate
+from workinghourstests import test_reportoutput
+from workinghourstests import test_hours_filtering
+from workinghourstests import test_logreader
+from workinghourstests import test_hoursnormalization
 
 # Run all test suites
 if __name__ == '__main__':
