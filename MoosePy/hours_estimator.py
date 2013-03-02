@@ -32,3 +32,6 @@ def estimate_hours(normalized_hours):
         estimated_hours.potential_end.append(potential_hours.end)
 
     return estimated_hours
+
+def get_estimated_hours(hours):
+    return [estimate_hours(working_hours) for working_hours in hours]
