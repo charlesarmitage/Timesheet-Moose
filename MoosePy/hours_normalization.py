@@ -2,12 +2,9 @@ import unittest
 import datetime
 import time
 
-def normalize_hours(raw_hours):
-    return [normalize_start_and_end_times(hours) for hours in raw_hours]
+def normalize_hours_list(raw_hours):
+    return [normalizehours(hours) for hours in raw_hours]
 
-def normalize_start_and_end_times(rawHours):
-    return normalizehours(rawHours)
- 
 def normalizehours(hours):
     hours = verify_hours(hours)
     nextq = nextquarter(hours.end)

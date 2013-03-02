@@ -18,10 +18,6 @@ def read_hours():
     log.close()
     return hours_input.parse(lines)
 
-def normalize_hours(raw_hours):
-    normalized_hours = [hours_aggregation.normalize_start_and_end_times(hours) for hours in raw_hours]
-    return normalized_hours
-
 def print_hours(days):
     weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
     
@@ -54,7 +50,7 @@ if __name__ == '__main__':
 
     hours = hours_filtering.filter_by__current_worksheet_month(datetime.datetime.today(), raw_hours)
     hours = hours_filtering.remove_weekends(hours)
-    normalized_hours = hours_normalization.normalize_hours(hours)
+    normalized_hours = hours_normalization.normalize_hours_list(hours)
     hours_grouped_by_day = hours_aggregation.group_hours_by_day(normalized_hours)
     print_hours(hours_grouped_by_day)
 
