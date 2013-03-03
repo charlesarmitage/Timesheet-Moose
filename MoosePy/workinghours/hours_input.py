@@ -2,6 +2,13 @@ import datetime
 import re
 from workinghours import workhours
 
+def readfromlog(logfile):
+    print 'Using: %s' % logfile
+    log = open(logfile, 'r')
+    lines = log.readlines()
+    log.close()
+    return parse(lines)
+
 def parsedate(line):
     match = re.search(r"../../..", line)
     day = None

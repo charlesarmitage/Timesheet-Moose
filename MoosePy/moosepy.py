@@ -9,11 +9,7 @@ import reportoutput
 
 def read_hours():   
     logFile = os.environ['USERPROFILE'] + r"\Documents\Timesheet.log"
-    print 'Using: %s' % logFile
-    log = open(logFile, 'r')
-    lines = log.readlines()
-    log.close()
-    return hours_input.parse(lines)
+    return hours_input.readfromlog(logFile)
 
 def print_hours(days):
     weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
