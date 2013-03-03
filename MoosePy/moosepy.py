@@ -1,18 +1,14 @@
 import sys
-import System
-from System import Environment
+import os
 import datetime
 from workinghours import hours_estimator
-from workinghours import hours_aggregation
-from workinghours import hours_filtering
-from workinghours import hours_normalization
 from workinghours import hours_feed
 from workinghours import hours_input
 import workbooknav
 import reportoutput
 
 def read_hours():   
-    logFile = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\Timesheet.log"
+    logFile = os.environ['USERPROFILE'] + r"\Documents\Timesheet.log"
     print 'Using: %s' % logFile
     log = open(logFile, 'r')
     lines = log.readlines()
