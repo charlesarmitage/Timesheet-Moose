@@ -7,7 +7,7 @@ from workinghours import hours_input
 class TestLogReader(unittest.TestCase):
 
     def test_can_read_all_lines_from_log_file(self):
-        logfile = open("Tests\SimpleLog.log", 'r')
+        logfile = open(r"Tests\SimpleLog.log", 'r')
         lines = logfile.readlines()
         assert lines[0] == "12/06/12 In: 09:00 Out: 17:00\n"
         assert lines[1] == "13/06/12 In: 08:00 Out: 16:00\n"
@@ -106,3 +106,16 @@ class TestLogReader(unittest.TestCase):
         assert hourslist[1].date == datetime.date(2012, 12, 19)
         assert hourslist[1].start == datetime.time(9, 45)
         assert hourslist[1].end == datetime.time(17, 30)       
+
+    def test_can_read_and_parse_data_from_a_log_file(self):
+        hourslist = hours_input.readfromlog(r"Tests\TestLog.log")
+
+        assert len(hourslist) == 2
+        assert hourslist[0].date == datetime.date(2012, 06, 12)
+        assert hourslist[0].start == datetime.time(9, 01)
+        assert hourslist[0].end == datetime.time(17, 10)
+        assert hourslist[1].date == datetime.date(2012, 06, 13)
+        assert hourslist[1].start == datetime.time(8, 13)
+        assert hourslist[1].end == datetime.time(16, 14) 
+
+

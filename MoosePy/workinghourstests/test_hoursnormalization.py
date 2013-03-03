@@ -78,6 +78,13 @@ class TestNormalization(unittest.TestCase):
 
         assert hours.start == datetime.time(9, 00)
 
+    def test_workingday_starting_at_08_13_starts_at_8_15am(self):
+        self.hours.start = datetime.time(8, 13)
+
+        hours = hours_normalization.normalizehours(self.hours)
+
+        assert hours.start == datetime.time(8, 15)        
+
     def test_workingday_has_starttime_of_now_when_no_starttime_is_initialized(self):
         self.hours.start = None
 
