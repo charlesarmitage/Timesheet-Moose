@@ -1,16 +1,25 @@
-﻿@model TimesheetWeb.ViewOutput
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+    <link rel="stylesheet" type="text/css" href="content/TimesheetStyle.css"/>
+</head>
+
+@model TimesheetWeb.ViewOutput
 
 <h1>Timesheet: Estimated Hours</h1>
 <h2>Month: @Model.month</h2>
 <p>Hours</p>
 <table>
+    <thead>
     <tr>
         <td>Date</td><td>Start</td><td>End</td>
     </tr>
-    @foreach (var hour in Model.hours)
-    {
-        <tr>
-            <td>@hour.date</td><td>@hour.start</td><td>@hour.end</td>
-        </tr>
-    }
+    </thead>
+    <tbody class="hours">
+        @foreach (var hour in Model.hours)
+        {
+            <tr>
+                <td>@hour.date</td><td>@hour.start</td><td>@hour.end</td>
+            </tr>
+        }
+    </tbody>
 </table>

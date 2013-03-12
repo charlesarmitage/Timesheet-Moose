@@ -1,0 +1,36 @@
+﻿body
+{
+font: 18px/1.5 Helvetica, Verdana, sans-serif;
+}
+
+table
+{
+	border-spacing:0px;
+	border-collapse: collapse;
+	width: 500px;
+}
+
+thead
+{
+	background-color: #C6E2FF;
+	border-bottom: 2px solid #3A5FCD;
+}
+
+tr
+{
+	border-bottom: 1px solid #C6E2FF;
+}
+
+.hours tr:hover{
+background-color:#C6E2FF;
+}
+
+td
+{
+	padding: 8px;
+}
+
+th
+{
+	padding: 8px;
+}
