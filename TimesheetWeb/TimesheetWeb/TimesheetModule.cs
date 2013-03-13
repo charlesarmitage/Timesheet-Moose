@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Linq;
-using System.Web;
 using IronPython.Hosting;
+using Microsoft.Scripting.Hosting;
 using Nancy;
-using System.Web;
 
 namespace TimesheetWeb
 {
@@ -35,10 +32,19 @@ namespace TimesheetWeb
 
         private dynamic GenerateWorkingHours()
         {
-            var ipy = Python.CreateRuntime();
-            string path = Path.Combine(pathProvider.GetRootPath(), @"..\..\MoosePy\estimatedhoursinweeks.py");
-            dynamic estimatedHours = ipy.UseFile(path);
-            return estimatedHours.weeks;
+            var engine = Python.CreateEngine();  
+            var scope = engine.CreateScope();
+            
+            var paths = engine.GetSearchPaths();
+            paths.Add(@"C:\Users\carmitage\Dropbox\hg\Timesheet-Moose\MoosePy");
+            paths.Add(@"C:\Python27\Lib");
+            engine.SetSearchPaths(paths);
+
+            var path = Path.Combine(pathProvider.GetRootPath(), @"..\..\MoosePy\estimatedhoursinweeks.py");
+
+            var source = engine.CreateScriptSourceFromFile(path);
+            source.Execute(scope);
+            return scope.GetVariable("weeks");
         }
     }
 }
