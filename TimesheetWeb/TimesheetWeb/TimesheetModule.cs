@@ -13,7 +13,7 @@ namespace TimesheetWeb
     public class ViewOutput
     {
         public string month;
-        public dynamic hours;
+        public dynamic weeks;
     }
 
     public class TimesheetModule : NancyModule
@@ -28,7 +28,7 @@ namespace TimesheetWeb
                            {
                                var workingHours = GenerateWorkingHours();
                                var m = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(DateTime.Now.Month);
-                               var output = new ViewOutput{hours = workingHours, month = m};
+                               var output = new ViewOutput{weeks = workingHours, month = m};
                                return View["TimesheetIndex.cshtml", output];
                            };
         }
@@ -36,9 +36,9 @@ namespace TimesheetWeb
         private dynamic GenerateWorkingHours()
         {
             var ipy = Python.CreateRuntime();
-            string path = Path.Combine(pathProvider.GetRootPath(), @"..\..\MoosePy\estimatedhoursfeed.py");
+            string path = Path.Combine(pathProvider.GetRootPath(), @"..\..\MoosePy\estimatedhoursinweeks.py");
             dynamic estimatedHours = ipy.UseFile(path);
-            return estimatedHours.hours;
+            return estimatedHours.weeks;
         }
     }
 }
