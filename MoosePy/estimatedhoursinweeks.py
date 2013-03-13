@@ -1,5 +1,3 @@
-import System
-from System import Environment
 import datetime
 import sys
 from workinghours import hours_feed
@@ -7,7 +5,7 @@ from workinghours import hours_input
 from workinghours import hours_estimator
 from workinghours import hours_aggregation
 
-logfile = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + r"\Timesheet.log"
+# logfile variable loaded from executing host
 hours = hours_input.readfromlog(logfile)
 hours = hours_feed.calculate_estimated_hours(datetime.datetime.today(), hours)
 hours = hours_estimator.get_estimated_hours(hours)

@@ -41,9 +41,13 @@ namespace TimesheetWeb
             engine.SetSearchPaths(paths);
 
             var path = Path.Combine(pathProvider.GetRootPath(), @"..\..\MoosePy\estimatedhoursinweeks.py");
-
             var source = engine.CreateScriptSourceFromFile(path);
+
+            var logFilePath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\Timesheet.log";
+            scope.SetVariable("logfile", logFilePath);
+
             source.Execute(scope);
+
             return scope.GetVariable("weeks");
         }
     }
