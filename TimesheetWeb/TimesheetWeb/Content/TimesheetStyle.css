@@ -3,11 +3,18 @@
 font: 18px/1.5 Helvetica, Verdana, sans-serif;
 }
 
+.week {
+    background-color: #5CACEE;
+    width: 540px;
+}
+
 table
 {
+    background-color: #F0F8FF;
 	border-spacing:0px;
 	border-collapse: collapse;
 	width: 500px;
+    margin: 20px;
 }
 
 thead
@@ -34,3 +41,4 @@ th
 {
 	padding: 8px;
 }
+
