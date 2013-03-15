@@ -16,7 +16,7 @@ namespace TimesheetWeb
     public class TimesheetModule : NancyModule
     {
         private readonly string timesheetPythonModulesPath;
-        private static readonly string python27Libs = @"C:\Python27\Lib";
+        private const string Python27Libs = @"C:\Python27\Lib";
 
         public TimesheetModule(IRootPathProvider pathProvider)
         {
@@ -38,7 +38,7 @@ namespace TimesheetWeb
             
             var paths = engine.GetSearchPaths();
             paths.Add(timesheetPythonModulesPath);
-            paths.Add(python27Libs);
+            paths.Add(Python27Libs);
             engine.SetSearchPaths(paths);
 
             var estimatedHoursFeed = Path.Combine(timesheetPythonModulesPath, @"estimatedhoursinweeks.py");
