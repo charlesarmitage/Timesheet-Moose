@@ -15,11 +15,12 @@ namespace TimesheetWeb
 
     public class TimesheetModule : NancyModule
     {
-        private readonly IRootPathProvider pathProvider;
+        private readonly string timesheetPythonModulesPath;
+        private static readonly string python27Libs = @"C:\Python27\Lib";
 
         public TimesheetModule(IRootPathProvider pathProvider)
         {
-            this.pathProvider = pathProvider;
+            timesheetPythonModulesPath = Path.Combine(pathProvider.GetRootPath(), @"..\..\MoosePy\");
 
             Get["/"] = parameters =>
                            {
@@ -36,12 +37,12 @@ namespace TimesheetWeb
             var scope = engine.CreateScope();
             
             var paths = engine.GetSearchPaths();
-            paths.Add(@"C:\Users\carmitage\Dropbox\hg\Timesheet-Moose\MoosePy");
-            paths.Add(@"C:\Python27\Lib");
+            paths.Add(timesheetPythonModulesPath);
+            paths.Add(python27Libs);
             engine.SetSearchPaths(paths);
 
-            var path = Path.Combine(pathProvider.GetRootPath(), @"..\..\MoosePy\estimatedhoursinweeks.py");
-            var source = engine.CreateScriptSourceFromFile(path);
+            var estimatedHoursFeed = Path.Combine(timesheetPythonModulesPath, @"estimatedhoursinweeks.py");
+            var source = engine.CreateScriptSourceFromFile(estimatedHoursFeed);
 
             var logFilePath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\Timesheet.log";
             scope.SetVariable("logfile", logFilePath);
