@@ -1,35 +1,37 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
     <link rel="stylesheet" type="text/css" href="content/TimesheetStyle.css"/>
+    <title>Timesheet Scribe</title>
 </head>
+<body>
+    @model TimesheetWeb.ViewOutput
 
-@model TimesheetWeb.ViewOutput
+    <h1>Timesheet: Estimated Hours</h1>
 
-<h1>Timesheet: Estimated Hours</h1>
-
-<form method="POST" action="logurl">
-    <input type="text" name="logfileurl" />
-    <input type="submit" value="Use alternative log file"/>
-</form>
-<p>Using timesheet log: @Model.logfileurl</p>
+    <form method="POST" action="logurl">
+        <input type="text" name="logfileurl" />
+        <input type="submit" value="Use alternative log file"/>
+    </form>
+    <p>Using timesheet log: @Model.logfileurl</p>
 
 
-<h2>Month: @Model.month</h2>
-<p>Hours</p>
+    <h2>Month: @Model.month</h2>
+    <p>Hours</p>
 
-@foreach (var week in Model.weeks)
-{
-    <div class="week">
-    <table>
-        <thead>
-            <tr><td>Date</td><td>Start</td><td>End</td></tr>
-        </thead>
-        <tbody class="hours">
-            @foreach (var hour in week)
-            {
-                <tr><td>@hour.date</td><td>@hour.start</td><td>@hour.end</td></tr>
-            }
-        </tbody>
-    </table>
-    </div>
-}
+    @foreach (var week in Model.weeks)
+    {
+        <div class="week">
+            <table>
+                <thead>
+                    <tr><td>Date</td><td>Start</td><td>End</td></tr>
+                </thead>
+                <tbody class="hours">
+                    @foreach (var hour in week)
+                    {
+                        <tr><td>@hour.date</td><td>@hour.start</td><td>@hour.end</td></tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</body>
