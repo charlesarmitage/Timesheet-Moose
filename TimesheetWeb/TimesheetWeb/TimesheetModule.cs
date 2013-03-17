@@ -12,6 +12,7 @@ namespace TimesheetWeb
 {
     public class ViewOutput
     {
+        public string logfileurl;
         public string month;
         public dynamic weeks;
     }
@@ -27,14 +28,25 @@ namespace TimesheetWeb
             ConfigureTimesheetModules(pathProvider);
 
             Get["/"] = parameters =>
-                           {
-                               var timesheetLog = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Timesheet.log");
-                               var workingHours = GenerateWorkingHours(weekFeedScript, timesheetLog);
+                {
+                    var timesheetLog = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                                                    "Timesheet.log");
+                    var workingHours = GenerateWorkingHours(weekFeedScript, timesheetLog);
 
-                               var m = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(DateTime.Now.Month);
-                               var output = new ViewOutput{weeks = workingHours, month = m};
-                               return View["TimesheetIndex.cshtml", output];
-                           };
+                    var m = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(DateTime.Now.Month);
+                    var output = new ViewOutput { weeks = workingHours, month = m, logfileurl = timesheetLog };
+                    return View["TimesheetIndex.cshtml", output];
+                };
+
+            Post["/logurl"] = parameters =>
+                {
+                    var timesheetLog = (string)Request.Form.logfileurl.Value;
+                    var workingHours = GenerateWorkingHours(weekFeedScript, timesheetLog);
+
+                    var m = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(DateTime.Now.Month);
+                    var output = new ViewOutput { weeks = workingHours, month = m, logfileurl = timesheetLog };
+                    return View["TimesheetIndex.cshtml", output];
+                };
         }
 
         private void ConfigureTimesheetModules(IRootPathProvider pathProvider)
