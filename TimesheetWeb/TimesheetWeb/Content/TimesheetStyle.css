@@ -3,6 +3,10 @@
 font: 18px/1.5 Helvetica, Verdana, sans-serif;
 }
 
+#logfileurl {
+    display: none;
+}
+
 .week {
     background-color: #5CACEE;
     width: 540px;

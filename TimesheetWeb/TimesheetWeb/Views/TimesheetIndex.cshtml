@@ -8,12 +8,15 @@
 
     <h1>Timesheet: Estimated Hours</h1>
 
-    <form method="POST" action="logurl" hidden="true">
+    <form id="logfileurl" method="POST" action="logurl">
         <input type="text" name="logfileurl" />
         <input type="submit" value="Use alternative log file"/>
     </form>
     <p>Using timesheet log: @Model.logfileurl</p>
 
+    <form action="download_timesheet" method="GET">
+        <input name="subject" type="submit" value="Download Timesheet (.xls)"/>
+    </form>
 
     <h2>Month: @Model.month</h2>
     <p>Hours</p>

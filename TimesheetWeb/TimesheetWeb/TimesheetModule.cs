@@ -47,6 +47,11 @@ namespace TimesheetWeb
                     var output = new ViewOutput { weeks = workingHours, month = m, logfileurl = timesheetLog };
                     return View["TimesheetIndex.cshtml", output];
                 };
+
+            Get["/download_timesheet"] = parameters =>
+                                             {
+                                                 return "To be implemented";
+                                             };
         }
 
         private void ConfigureTimesheetModules(IRootPathProvider pathProvider)
