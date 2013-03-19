@@ -1,0 +1,3 @@
+﻿This is a placeholder for a calculated timesheet.
+
+This file should be downloaded by the user for their timesheet.

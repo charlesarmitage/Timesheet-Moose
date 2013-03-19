@@ -7,6 +7,7 @@ using System.Xml.Serialization;
 using IronPython.Hosting;
 using Microsoft.Scripting.Hosting;
 using Nancy;
+using Nancy.Responses;
 
 namespace TimesheetWeb
 {
@@ -49,9 +50,15 @@ namespace TimesheetWeb
                 };
 
             Get["/download_timesheet"] = parameters =>
-                                             {
-                                                 return "To be implemented";
-                                             };
+                {
+                    const string fileName = "Placeholder.txt";
+                    var mimeType = MimeTypes.GetMimeType(fileName);
+                    var path = Path.Combine(pathProvider.GetRootPath(), fileName);
+                    Func<Stream> file = () => new FileStream(path, FileMode.Open);
+
+                    var response = new StreamResponse(file, mimeType);
+                    return response.AsAttachment(fileName);
+               };
         }
 
         private void ConfigureTimesheetModules(IRootPathProvider pathProvider)
