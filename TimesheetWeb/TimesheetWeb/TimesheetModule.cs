@@ -23,6 +23,7 @@ namespace TimesheetWeb
         private string TimesheetPythonModulesPath;
         private string Python27Libs;
         private string weekFeedScript;
+        private ScriptEngine engine = Python.CreateEngine();
 
         public TimesheetModule(IRootPathProvider pathProvider)
         {
@@ -79,20 +80,24 @@ namespace TimesheetWeb
 
         private dynamic GenerateWorkingHours(string hoursFeedPath, string timesheetLogPath)
         {
-            var engine = Python.CreateEngine();  
-            var scope = engine.CreateScope();
-            
-            var paths = engine.GetSearchPaths();
-            paths.Add(TimesheetPythonModulesPath);
-            paths.Add(Python27Libs);
-            engine.SetSearchPaths(paths);
-
+            var scope = BuildScriptScope();
             var estimatedHoursFeed = Path.Combine(TimesheetPythonModulesPath, hoursFeedPath);
             var source = engine.CreateScriptSourceFromFile(estimatedHoursFeed);
 
             scope.SetVariable("logfile", timesheetLogPath);
             source.Execute(scope);
             return scope.GetVariable("weeks");
+        }
+
+        private ScriptScope BuildScriptScope()
+        {
+            var scope = engine.CreateScope();
+
+            var paths = engine.GetSearchPaths();
+            paths.Add(TimesheetPythonModulesPath);
+            paths.Add(Python27Libs);
+            engine.SetSearchPaths(paths);
+            return scope;
         }
     }
 }
