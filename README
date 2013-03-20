@@ -14,9 +14,12 @@ TO DO
 
 1. Build GUI front end - preferably a web app front end
 	- User should be able to view their current month's timesheet from logger data
+		- Display current month & current month estimated hours - DONE
 		- Display table of working hours - DONE
+	 	- Display log file used to generate estimated hours - DONE
 		- Refactor configuration and display of tables - DONE
 		- TODO: User can configure the location of their timesheet.log
+		- TODO: User can download an Excel spreadsheet version of their timesheet
 	- User should be able to edit the times in the timesheet
 	- User should be able to save the timesheet for later viewing
 	- User should be able to create an excel version of the timesheet
@@ -33,6 +36,10 @@ TO DO
 	- User can use third party holiday tracker plugin
 	- User can log in to third party holiday tracker
 	- User can import holiday information into timesheet
+
+5. Make web app standalone
+	- User should be able to install a single .exe (or .exe plus some packages)
+	- User should be able to run .exe and use browser to interact with Timesheet program
 
 License
 -------
