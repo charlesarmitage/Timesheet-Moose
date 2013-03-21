@@ -26,4 +26,6 @@ def generate_estimated_hours(logfile):
 
 
 if __name__ == "__main__":
+	if 'logfile' not in globals():
+		logfile = sys.argv[1]
 	weeks = generate_estimated_hours(logfile)
