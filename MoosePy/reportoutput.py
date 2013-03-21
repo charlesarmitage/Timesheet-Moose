@@ -14,6 +14,9 @@ class ReportWriter():
 	def __init__(self, report_accessor):
 		self.accessor = report_accessor
 
+	def close():
+		self.accessor.Dispose()
+
 	def converttoDateTime(self, date, hours):
 		day = DateTime(date.year,
 			date.month,
