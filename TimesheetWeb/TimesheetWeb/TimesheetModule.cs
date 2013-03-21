@@ -2,9 +2,11 @@
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Xml;
+using System.Text;
 using System.Xml.Serialization;
+using IronPython.Compiler;
 using IronPython.Hosting;
+using IronPython.Runtime;
 using Microsoft.Scripting.Hosting;
 using Nancy;
 using Nancy.Responses;
@@ -85,7 +87,7 @@ namespace TimesheetWeb
             var source = engine.CreateScriptSourceFromFile(estimatedHoursFeed);
 
             scope.SetVariable("logfile", timesheetLogPath);
-            source.Execute(scope);
+            ExecuteScript(scope, source);
             return scope.GetVariable("weeks");
         }
 
@@ -97,7 +99,19 @@ namespace TimesheetWeb
             paths.Add(TimesheetPythonModulesPath);
             paths.Add(Python27Libs);
             engine.SetSearchPaths(paths);
+            
             return scope;
+        }
+
+        private void ExecuteScript(ScriptScope scope, ScriptSource source)
+        {
+            var pco = (PythonCompilerOptions) engine.GetCompilerOptions(scope);
+
+            pco.ModuleName = "__main__";
+            pco.Module |= ModuleOptions.Initialize;
+
+            CompiledCode compiled = source.Compile(pco);
+            compiled.Execute(scope);
         }
     }
 }
