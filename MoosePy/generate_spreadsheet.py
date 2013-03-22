@@ -16,7 +16,6 @@ def write_hours(xls_file, weeks):
 	for week in weeks:
 		hours.extend(week)
 
-	print hours
 	write_hours_to_report(xls_file, hours)
 
 if __name__ == '__main__':
@@ -25,6 +24,6 @@ if __name__ == '__main__':
 		weeks = estimatedhoursinweeks.generate_estimated_hours(logfile)
 	
 	xls_file = r"C:\git\Timesheet-Moose\MooseXLSReports\Testtimesheet.xlsx"
-	shutil.copyfile(xls_file, xls_file + ".tmp")
+	shutil.copyfile(xls_file, xls_file + ".tmp.xlsx")
 
-	write_hours(xls_file + ".tmp", weeks)
+	write_hours(xls_file + ".tmp.xlsx", weeks)
