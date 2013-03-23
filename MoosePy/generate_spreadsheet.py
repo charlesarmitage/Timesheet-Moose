@@ -2,10 +2,12 @@ import sys
 import shutil
 import workbooknav
 import reportoutput
+import textreportwriter
 import estimatedhoursinweeks
 
 def write_hours_to_report(xls_file, hours):
-    writer = reportoutput.build_ipy_writer(xls_file)
+    #writer = reportoutput.build_ipy_writer(xls_file)
+    writer = textreportwriter.build_text_writer(xls_file)
     for estimated_hours in hours:
         writer.write(estimated_hours)
 

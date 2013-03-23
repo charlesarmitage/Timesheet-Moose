@@ -3,10 +3,11 @@ clr.AddReferenceToFile('MooseXLSReports')
 import MooseXLSReports
 import System
 from System import DateTime
+import reportoutput
 
 def build_ipy_writer(filename):
 	xls_report = MooseXLSReports.XlsReport(filename)
-	writer = ReportWriter(xls_report)
+	writer = reportoutput.ReportWriter(xls_report)
 	return writer
 
 class ReportWriter():
