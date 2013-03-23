@@ -14,7 +14,7 @@ class ReportWriter():
 	def __init__(self, report_accessor):
 		self.accessor = report_accessor
 
-	def close():
+	def close(self):
 		self.accessor.Dispose()
 
 	def converttoDateTime(self, date, hours):

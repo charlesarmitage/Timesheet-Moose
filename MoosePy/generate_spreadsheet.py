@@ -16,7 +16,6 @@ def write_hours(xls_file, weeks):
 	for week in weeks:
 		hours.extend(week)
 
-	print hours
 	write_hours_to_report(xls_file, hours)
 
 if __name__ == '__main__':
@@ -27,6 +26,7 @@ if __name__ == '__main__':
 	if 'xls_file'  not in globals():
 		xls_file = sys.argv[2]
 
+	#Copy file
 	output_file = r".\generated_timesheet.xlsx"
 	shutil.copyfile(xls_file, output_file)
 
