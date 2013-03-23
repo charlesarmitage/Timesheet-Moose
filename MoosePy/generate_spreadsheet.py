@@ -23,8 +23,11 @@ if __name__ == '__main__':
 	if 'weeks' not in globals():
 		logfile = sys.argv[1]
 		weeks = estimatedhoursinweeks.generate_estimated_hours(logfile)
-	
-	xls_file = r"C:\git\Timesheet-Moose\MooseXLSReports\Testtimesheet.xlsx"
-	shutil.copyfile(xls_file, xls_file + ".tmp")
 
-	write_hours(xls_file + ".tmp", weeks)
+	if 'xls_file'  not in globals():
+		xls_file = sys.argv[2]
+
+	output_file = r".\generated_timesheet.xlsx"
+	shutil.copyfile(xls_file, output_file)
+
+	write_hours(output_file, weeks)
