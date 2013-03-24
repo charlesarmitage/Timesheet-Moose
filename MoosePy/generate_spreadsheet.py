@@ -21,6 +21,9 @@ def write_hours(xls_file, weeks):
 	write_hours_to_report(xls_file, hours)
 
 def generate_spreadsheet(xls_file, weeks):
+	if not xls_file:
+		return ""
+
 	output_file = r"C:\git\generated_timesheet.xlsx"
 	shutil.copyfile(xls_file, output_file)
 
