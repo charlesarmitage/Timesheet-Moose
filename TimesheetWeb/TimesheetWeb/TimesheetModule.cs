@@ -84,51 +84,36 @@ namespace TimesheetWeb
 
         private dynamic GenerateWorkingHours(string hoursFeedPath, string timesheetLogPath)
         {
-            var scope = BuildScriptScope();
             var estimatedHoursFeed = Path.Combine(TimesheetPythonModulesPath, hoursFeedPath);
-            var source = engine.CreateScriptSourceFromFile(estimatedHoursFeed);
-
-            scope.SetVariable("logfile", timesheetLogPath);
-            ExecuteScript(scope, source);
-            return scope.GetVariable("weeks");
+            var script = LoadScript(estimatedHoursFeed);
+            return script.generate_estimated_hours(timesheetLogPath);
         }
 
         private dynamic GenerateSpreadheet(string generationScriptPath, string spreadsheetPath)
         {
-            var scope = BuildScriptScope();
-            var generationScript = Path.Combine(TimesheetPythonModulesPath, generationScriptPath);
-            var source = engine.CreateScriptSourceFromFile(generationScript);
+            var timesheetLog = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Timesheet.log");
+            var estimatedHoursFeed = Path.Combine(TimesheetPythonModulesPath, this.config.WeeksFeed.Filename);
 
-            scope.SetVariable("xls_file", spreadsheetPath);
-            var timesheetLog = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
-                                            "Timesheet.log");
-            var workingHours = GenerateWorkingHours(weekFeedScript, timesheetLog);
-            scope.SetVariable("weeks", workingHours);
-            ExecuteScript(scope, source);
-            return scope.GetVariable("output_file");
+            var script = LoadScript(estimatedHoursFeed);
+            var workingHours = script.generate_estimated_hours(timesheetLog);
+
+            var generationScript = Path.Combine(TimesheetPythonModulesPath, generationScriptPath);
+            var spreadsheet = LoadScript(generationScript);
+            return spreadsheet.generate_spreadsheet(spreadsheetPath, workingHours);
         }
 
-        private ScriptScope BuildScriptScope()
+        private dynamic LoadScript(string estimatedHoursFeed)
         {
-            var scope = engine.CreateScope();
+            var runtime = Python.CreateRuntime();
+            var eng = runtime.GetEngineByFileExtension(".py");
 
-            var paths = engine.GetSearchPaths();
+            var paths = eng.GetSearchPaths();
             paths.Add(TimesheetPythonModulesPath);
             paths.Add(Python27Libs);
-            engine.SetSearchPaths(paths);
-            
-            return scope;
-        }
+            eng.SetSearchPaths(paths);
 
-        private void ExecuteScript(ScriptScope scope, ScriptSource source)
-        {
-            var pco = (PythonCompilerOptions) engine.GetCompilerOptions(scope);
-
-            pco.ModuleName = "__main__";
-            pco.Module |= ModuleOptions.Initialize;
-
-            CompiledCode compiled = source.Compile(pco);
-            compiled.Execute(scope);
+            dynamic script = runtime.UseFile(estimatedHoursFeed);
+            return script;
         }
     }
 }

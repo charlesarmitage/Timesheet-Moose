@@ -20,6 +20,13 @@ def write_hours(xls_file, weeks):
 
 	write_hours_to_report(xls_file, hours)
 
+def generate_spreadsheet(xls_file, weeks):
+	output_file = r"C:\git\generated_timesheet.xlsx"
+	shutil.copyfile(xls_file, output_file)
+
+	write_hours(output_file, weeks)
+	return output_file
+
 if __name__ == '__main__':
 	if len(sys.argv) == 1:
 		print "Usage from command line: generate_spreadsheet <hours log> <initial spreadsheet>"
