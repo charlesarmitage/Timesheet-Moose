@@ -1,6 +1,23 @@
-﻿body
-{
+﻿body {
 font: 18px/1.5 Helvetica, Verdana, sans-serif;
+}
+
+.styled-button {
+	color:#FFF;
+	background-color:#00BFFF;
+	/*border-radius:5px;*/
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	border:none;
+	font-family:'Helvetica Neue',Arial,sans-serif;
+	font-size:16px;
+	font-weight:700;
+	height:32px;
+	padding:4px 16px;
+}
+
+#input_spreadsheet {
+    display: none;
 }
 
 #logfileurl {
@@ -12,8 +29,7 @@ font: 18px/1.5 Helvetica, Verdana, sans-serif;
     width: 540px;
 }
 
-table
-{
+table {
     background-color: #F0F8FF;
 	border-spacing:0px;
 	border-collapse: collapse;
@@ -21,8 +37,7 @@ table
     margin: 20px;
 }
 
-thead
-{
+thead {
 	background-color: #C6E2FF;
 	border-bottom: 2px solid #3A5FCD;
 }
@@ -32,7 +47,7 @@ tr
 	border-bottom: 1px solid #C6E2FF;
 }
 
-.hours tr:hover{
+.hours tr:hover {
 background-color:#C6E2FF;
 }
 
