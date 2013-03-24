@@ -1,12 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Xml.Serialization;
-using IronPython.Compiler;
 using IronPython.Hosting;
-using IronPython.Runtime;
 using Microsoft.Scripting.Hosting;
 using Nancy;
 using Nancy.Responses;
@@ -23,10 +21,7 @@ namespace TimesheetWeb
     public class TimesheetModule : NancyModule
     {
         private string TimesheetPythonModulesPath;
-        private string Python27Libs;
-        private string weekFeedScript;
         private TimesheetConfig config;
-        private ScriptEngine engine = Python.CreateEngine();
 
         public TimesheetModule(IRootPathProvider pathProvider)
         {
@@ -36,7 +31,7 @@ namespace TimesheetWeb
                 {
                     var timesheetLog = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
                                                     "Timesheet.log");
-                    var workingHours = GenerateWorkingHours(weekFeedScript, timesheetLog);
+                    var workingHours = GenerateWorkingHours(config.WeeksFeed.Filename, timesheetLog);
 
                     var m = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(DateTime.Now.Month);
                     var output = new ViewOutput { weeks = workingHours, month = m, logfileurl = timesheetLog };
@@ -46,23 +41,24 @@ namespace TimesheetWeb
             Post["/logurl"] = parameters =>
                 {
                     var timesheetLog = (string)Request.Form.logfileurl.Value;
-                    var workingHours = GenerateWorkingHours(weekFeedScript, timesheetLog);
+                    var workingHours = GenerateWorkingHours(config.WeeksFeed.Filename, timesheetLog);
 
                     var m = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(DateTime.Now.Month);
                     var output = new ViewOutput { weeks = workingHours, month = m, logfileurl = timesheetLog };
                     return View["TimesheetIndex.cshtml", output];
                 };
 
-            Get["/download_timesheet"] = parameters =>
-                {
-                    string fileName = GenerateSpreadheet(config.SpreadsheetGenerator.Filename, @"C:\git\Timesheet-Moose\MooseXLSReports\TestTimesheet.xlsx");
-                    var mimeType = MimeTypes.GetMimeType(fileName);
-                    var path = Path.Combine(pathProvider.GetRootPath(), fileName);
-                    Func<Stream> file = () => new FileStream(path, FileMode.Open);
+            Post["/update_spreadsheet"] = parameters =>
+            {
+                var uploadedFiles = UploadFile(pathProvider);
 
-                    var response = new StreamResponse(file, mimeType);
-                    return response.AsAttachment(fileName);
-               };
+                var spreadsheet = uploadedFiles.FirstOrDefault() ?? string.Empty;
+                string fileName = GenerateSpreadheet(config.SpreadsheetGenerator.Filename, spreadsheet);
+                if(fileName != string.Empty)
+                    return BuildFileDownloadResponse(pathProvider, fileName);
+                else
+                    return "Invalid file";
+            };
         }
 
         private void ConfigureTimesheetModules(IRootPathProvider pathProvider)
@@ -76,9 +72,7 @@ namespace TimesheetWeb
                 timesheetStream.Close();
             }
 
-            Python27Libs = timesheetConfig.Python.Path;
             TimesheetPythonModulesPath = Path.Combine(pathProvider.GetRootPath(), timesheetConfig.Module.Relativepath);
-            weekFeedScript = timesheetConfig.WeeksFeed.Filename;
             config = timesheetConfig;
         }
 
@@ -102,17 +96,50 @@ namespace TimesheetWeb
             return spreadsheet.generate_spreadsheet(spreadsheetPath, workingHours);
         }
 
-        private dynamic LoadScript(string estimatedHoursFeed)
+        private IEnumerable<string> UploadFile(IRootPathProvider pathProvider)
+        {
+            var uploadDirectory = Path.Combine(pathProvider.GetRootPath(), "Content", "uploads");
+
+            if (!Directory.Exists(uploadDirectory))
+            {
+                Directory.CreateDirectory(uploadDirectory);
+            }
+
+            var uploadedFiles = new List<string>();
+            foreach (var file in Request.Files)
+            {
+                var filename = Path.Combine(uploadDirectory, file.Name);
+                uploadedFiles.Add(filename);
+                using (var fileStream = new FileStream(filename, FileMode.Create))
+                {
+                    file.Value.CopyTo(fileStream);
+                }
+            }
+
+            return uploadedFiles;
+        }
+
+        private static dynamic BuildFileDownloadResponse(IRootPathProvider pathProvider, string fileName)
+        {
+            var mimeType = MimeTypes.GetMimeType(fileName);
+            var path = Path.Combine(pathProvider.GetRootPath(), fileName);
+            Func<Stream> file = () => new FileStream(path, FileMode.Open);
+
+            var response = new StreamResponse(file, mimeType);
+            return response.AsAttachment(fileName);
+        }
+
+        private dynamic LoadScript(string ironPythonScript)
         {
             var runtime = Python.CreateRuntime();
             var eng = runtime.GetEngineByFileExtension(".py");
 
             var paths = eng.GetSearchPaths();
             paths.Add(TimesheetPythonModulesPath);
-            paths.Add(Python27Libs);
+            paths.Add(config.Python.Path);
             eng.SetSearchPaths(paths);
 
-            dynamic script = runtime.UseFile(estimatedHoursFeed);
+            dynamic script = runtime.UseFile(ironPythonScript);
             return script;
         }
     }

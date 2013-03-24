@@ -13,9 +13,10 @@
         <input type="submit" value="Use alternative log file"/>
     </form>
     <p>Using timesheet log: @Model.logfileurl</p>
-
-    <form action="download_timesheet" method="GET">
-        <input name="subject" type="submit" value="Download Timesheet (.xls)"/>
+    
+    <form action="update_spreadsheet" method="POST" enctype="multipart/form-data">
+        <input type="file" name="input_spreadsheet"/>
+        <input type="submit" name="update_spreadsheet" value="Update Spreadsheet"/>
     </form>
 
     <h2>Month: @Model.month</h2>
