@@ -25,6 +25,7 @@ namespace TimesheetWeb
         private string TimesheetPythonModulesPath;
         private string Python27Libs;
         private string weekFeedScript;
+        private TimesheetConfig config;
         private ScriptEngine engine = Python.CreateEngine();
 
         public TimesheetModule(IRootPathProvider pathProvider)
@@ -54,7 +55,7 @@ namespace TimesheetWeb
 
             Get["/download_timesheet"] = parameters =>
                 {
-                    const string fileName = "Placeholder.txt";
+                    string fileName = GenerateSpreadheet(config.SpreadsheetGenerator.Filename, @"C:\git\Timesheet-Moose\MooseXLSReports\TestTimesheet.xlsx");
                     var mimeType = MimeTypes.GetMimeType(fileName);
                     var path = Path.Combine(pathProvider.GetRootPath(), fileName);
                     Func<Stream> file = () => new FileStream(path, FileMode.Open);
@@ -78,6 +79,7 @@ namespace TimesheetWeb
             Python27Libs = timesheetConfig.Python.Path;
             TimesheetPythonModulesPath = Path.Combine(pathProvider.GetRootPath(), timesheetConfig.Module.Relativepath);
             weekFeedScript = timesheetConfig.WeeksFeed.Filename;
+            config = timesheetConfig;
         }
 
         private dynamic GenerateWorkingHours(string hoursFeedPath, string timesheetLogPath)
@@ -89,6 +91,21 @@ namespace TimesheetWeb
             scope.SetVariable("logfile", timesheetLogPath);
             ExecuteScript(scope, source);
             return scope.GetVariable("weeks");
+        }
+
+        private dynamic GenerateSpreadheet(string generationScriptPath, string spreadsheetPath)
+        {
+            var scope = BuildScriptScope();
+            var generationScript = Path.Combine(TimesheetPythonModulesPath, generationScriptPath);
+            var source = engine.CreateScriptSourceFromFile(generationScript);
+
+            scope.SetVariable("xls_file", spreadsheetPath);
+            var timesheetLog = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                                            "Timesheet.log");
+            var workingHours = GenerateWorkingHours(weekFeedScript, timesheetLog);
+            scope.SetVariable("weeks", workingHours);
+            ExecuteScript(scope, source);
+            return scope.GetVariable("output_file");
         }
 
         private ScriptScope BuildScriptScope()
