@@ -28,18 +28,12 @@ def generate_spreadsheet(xls_file, weeks):
 	return output_file
 
 if __name__ == '__main__':
-	if len(sys.argv) == 1:
+	if len(sys.argv) != 3:
 		print "Usage from command line: generate_spreadsheet <hours log> <initial spreadsheet>"
+		exit()
 
-	if 'weeks' not in globals():
-		logfile = sys.argv[1]
-		weeks = estimatedhoursinweeks.generate_estimated_hours(logfile)
+	logfile = sys.argv[1]
+	weeks = estimatedhoursinweeks.generate_estimated_hours(logfile)
+	xls_file = sys.argv[2]
 
-	if 'xls_file'  not in globals():
-		xls_file = sys.argv[2]
-
-	#Copy file
-	output_file = r"C:\git\generated_timesheet.xlsx"
-	shutil.copyfile(xls_file, output_file)
-
-	write_hours(output_file, weeks)
+	generate_spreadsheet(xls_file, weeks)

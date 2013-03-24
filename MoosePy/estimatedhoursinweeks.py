@@ -26,6 +26,9 @@ def generate_estimated_hours(logfile):
 
 
 if __name__ == "__main__":
-	if 'logfile' not in globals():
-		logfile = sys.argv[1]
+	if len(sys.argv) == 1:
+		print "Usage from command line: estimatehoursinweek <hours log>"
+		exit()
+
+	logfile = sys.argv[1]
 	weeks = generate_estimated_hours(logfile)
