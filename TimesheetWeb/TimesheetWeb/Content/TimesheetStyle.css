@@ -1,5 +1,8 @@
 ﻿body {
-font: 18px/1.5 Helvetica, Verdana, sans-serif;
+    font: 18px/1.5 Helvetica, Verdana, sans-serif;
+    margin-left: auto;
+    margin-right: auto;
+    width: 640px;
 }
 
 .styled-button {
