@@ -5,7 +5,6 @@ using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
 using IronPython.Hosting;
-using Microsoft.Scripting.Hosting;
 using Nancy;
 using Nancy.Responses;
 
@@ -20,11 +19,10 @@ namespace TimesheetWeb
 
     public class TimesheetModule : NancyModule
     {
-        private ScriptLoader scriptLoader;
         private string estimatedHoursScript;
         private string spreadsheetGeneratorScript;
         private string timesheetLog;
-        private string TimesheetPythonModulesPath;
+        private string timesheetPythonModulesPath;
         private TimesheetConfig config;
 
         public TimesheetModule(IRootPathProvider pathProvider)
@@ -33,9 +31,7 @@ namespace TimesheetWeb
 
             Get["/"] = parameters =>
                 {
-	                var timesheetLog = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
-	                                                   "Timesheet.log");
-	                var workingHours = GenerateWorkingHours(config.WeeksFeed.Filename, timesheetLog);
+	                var workingHours = GenerateWorkingHours(timesheetLog);
 
 
                     var m = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(DateTime.Now.Month);
@@ -45,8 +41,7 @@ namespace TimesheetWeb
 
             Post["/logurl"] = parameters =>
                 {
-                    var timesheetLog = (string)Request.Form.logfileurl.Value;
-                    var workingHours = GenerateWorkingHours(config.WeeksFeed.Filename, timesheetLog);
+                    var workingHours = GenerateWorkingHours(timesheetLog);
 
 
                     var m = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(DateTime.Now.Month);
@@ -59,7 +54,7 @@ namespace TimesheetWeb
                 var uploadedFiles = UploadFile(pathProvider);
 
                 var spreadsheet = uploadedFiles.FirstOrDefault() ?? string.Empty;
-                string fileName = GenerateSpreadheet(config.SpreadsheetGenerator.Filename, spreadsheet);
+                string fileName = GenerateSpreadheet(spreadsheet);
 
                 if(fileName != string.Empty)
                     return BuildFileDownloadResponse(pathProvider, fileName);
@@ -81,18 +76,18 @@ namespace TimesheetWeb
 
             timesheetLog = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Timesheet.log");
 
-            TimesheetPythonModulesPath = Path.Combine(pathProvider.GetRootPath(), config.Module.Relativepath);
-            estimatedHoursScript = Path.Combine(TimesheetPythonModulesPath, config.WeeksFeed.Filename);
-            spreadsheetGeneratorScript = Path.Combine(TimesheetPythonModulesPath, config.SpreadsheetGenerator.Filename);
+            timesheetPythonModulesPath = Path.Combine(pathProvider.GetRootPath(), config.Module.Relativepath);
+            estimatedHoursScript = Path.Combine(timesheetPythonModulesPath, config.WeeksFeed.Filename);
+            spreadsheetGeneratorScript = Path.Combine(timesheetPythonModulesPath, config.SpreadsheetGenerator.Filename);
         }
 
-        private dynamic GenerateWorkingHours(string hoursFeedPath, string timesheetLogPath)
+        private dynamic GenerateWorkingHours(string timesheetLogPath)
         {
             var script = LoadScript(estimatedHoursScript);
             return script.generate_estimated_hours(timesheetLogPath);
         }
 
-        private dynamic GenerateSpreadheet(string generationScriptPath, string spreadsheetPath)
+        private dynamic GenerateSpreadheet(string spreadsheetPath)
         {
             var workingHoursScript = LoadScript(estimatedHoursScript);
             var workingHours = workingHoursScript.generate_estimated_hours(timesheetLog);
@@ -140,7 +135,7 @@ namespace TimesheetWeb
             var eng = runtime.GetEngineByFileExtension(".py");
 
             var paths = eng.GetSearchPaths();
-            paths.Add(TimesheetPythonModulesPath);
+            paths.Add(timesheetPythonModulesPath);
             paths.Add(config.Python.Path);
             eng.SetSearchPaths(paths);
 
