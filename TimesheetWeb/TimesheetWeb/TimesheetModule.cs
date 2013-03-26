@@ -12,9 +12,9 @@ namespace TimesheetWeb
 {
     public class ViewOutput
     {
-        public string logfileurl;
-        public string month;
-        public dynamic weeks;
+        public string LogFileUrl;
+        public string Month;
+        public dynamic Weeks;
     }
 
     public class TimesheetModule : NancyModule
@@ -35,7 +35,7 @@ namespace TimesheetWeb
 
 
                     var m = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(DateTime.Now.Month);
-                    var output = new ViewOutput { weeks = workingHours, month = m, logfileurl = timesheetLog };
+                    var output = new ViewOutput { Weeks = workingHours, Month = m, LogFileUrl = timesheetLog };
                     return View["TimesheetIndex.cshtml", output];
                 };
 
@@ -45,7 +45,7 @@ namespace TimesheetWeb
 
 
                     var m = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(DateTime.Now.Month);
-                    var output = new ViewOutput { weeks = workingHours, month = m, logfileurl = timesheetLog };
+                    var output = new ViewOutput { Weeks = workingHours, Month = m, LogFileUrl = timesheetLog };
                     return View["TimesheetIndex.cshtml", output];
                 };
 

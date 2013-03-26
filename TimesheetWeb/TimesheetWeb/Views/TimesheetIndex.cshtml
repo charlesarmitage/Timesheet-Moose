@@ -22,7 +22,7 @@
         <input type="text" class="styled-button" name="logfileurl" />
         <input type="submit" class="styled-button" value="Use alternative log file"/>
     </form>
-    <p>Using timesheet log: @Model.logfileurl</p>
+    <p>Using timesheet log: @Model.LogFileUrl</p>
     
     <form action="update_spreadsheet" method="POST" enctype="multipart/form-data">
         <input type="file" class="styled-button" name="input_spreadsheet" id="input_spreadsheet" onchange="updateSpreadsheet(this)"/>
@@ -31,10 +31,10 @@
         <input type="submit" class="styled-button" name="update_spreadsheet"  value="Update Spreadsheet"/>
     </form>
 
-    <h2>Month: @Model.month</h2>
+    <h2>Month: @Model.Month</h2>
     <p>Hours</p>
 
-    @foreach (var week in Model.weeks)
+    @foreach (var week in Model.Weeks)
     {
         <div class="week">
             <table>
