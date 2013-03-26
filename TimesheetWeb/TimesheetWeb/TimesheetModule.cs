@@ -20,6 +20,10 @@ namespace TimesheetWeb
 
     public class TimesheetModule : NancyModule
     {
+        private ScriptLoader scriptLoader;
+        private string estimatedHoursScript;
+        private string spreadsheetGeneratorScript;
+        private string timesheetLog;
         private string TimesheetPythonModulesPath;
         private TimesheetConfig config;
 
@@ -29,9 +33,10 @@ namespace TimesheetWeb
 
             Get["/"] = parameters =>
                 {
-                    var timesheetLog = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
-                                                    "Timesheet.log");
-                    var workingHours = GenerateWorkingHours(config.WeeksFeed.Filename, timesheetLog);
+	                var timesheetLog = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+	                                                   "Timesheet.log");
+	                var workingHours = GenerateWorkingHours(config.WeeksFeed.Filename, timesheetLog);
+
 
                     var m = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(DateTime.Now.Month);
                     var output = new ViewOutput { weeks = workingHours, month = m, logfileurl = timesheetLog };
@@ -42,6 +47,7 @@ namespace TimesheetWeb
                 {
                     var timesheetLog = (string)Request.Form.logfileurl.Value;
                     var workingHours = GenerateWorkingHours(config.WeeksFeed.Filename, timesheetLog);
+
 
                     var m = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(DateTime.Now.Month);
                     var output = new ViewOutput { weeks = workingHours, month = m, logfileurl = timesheetLog };
@@ -54,6 +60,7 @@ namespace TimesheetWeb
 
                 var spreadsheet = uploadedFiles.FirstOrDefault() ?? string.Empty;
                 string fileName = GenerateSpreadheet(config.SpreadsheetGenerator.Filename, spreadsheet);
+
                 if(fileName != string.Empty)
                     return BuildFileDownloadResponse(pathProvider, fileName);
                 else
@@ -64,36 +71,34 @@ namespace TimesheetWeb
         private void ConfigureTimesheetModules(IRootPathProvider pathProvider)
         {
             var configPath = Path.Combine(pathProvider.GetRootPath(), "timesheet.config");
-            var timesheetConfig = new TimesheetConfig();
+            config = new TimesheetConfig();
             using (var timesheetStream = new StreamReader(configPath))
             {
                 var configXml = new XmlSerializer(typeof (TimesheetConfig));
-                timesheetConfig = (TimesheetConfig) configXml.Deserialize(timesheetStream);
+                config = (TimesheetConfig) configXml.Deserialize(timesheetStream);
                 timesheetStream.Close();
             }
 
-            TimesheetPythonModulesPath = Path.Combine(pathProvider.GetRootPath(), timesheetConfig.Module.Relativepath);
-            config = timesheetConfig;
+            timesheetLog = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Timesheet.log");
+
+            TimesheetPythonModulesPath = Path.Combine(pathProvider.GetRootPath(), config.Module.Relativepath);
+            estimatedHoursScript = Path.Combine(TimesheetPythonModulesPath, config.WeeksFeed.Filename);
+            spreadsheetGeneratorScript = Path.Combine(TimesheetPythonModulesPath, config.SpreadsheetGenerator.Filename);
         }
 
         private dynamic GenerateWorkingHours(string hoursFeedPath, string timesheetLogPath)
         {
-            var estimatedHoursFeed = Path.Combine(TimesheetPythonModulesPath, hoursFeedPath);
-            var script = LoadScript(estimatedHoursFeed);
+            var script = LoadScript(estimatedHoursScript);
             return script.generate_estimated_hours(timesheetLogPath);
         }
 
         private dynamic GenerateSpreadheet(string generationScriptPath, string spreadsheetPath)
         {
-            var timesheetLog = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Timesheet.log");
-            var estimatedHoursFeed = Path.Combine(TimesheetPythonModulesPath, this.config.WeeksFeed.Filename);
+            var workingHoursScript = LoadScript(estimatedHoursScript);
+            var workingHours = workingHoursScript.generate_estimated_hours(timesheetLog);
 
-            var script = LoadScript(estimatedHoursFeed);
-            var workingHours = script.generate_estimated_hours(timesheetLog);
-
-            var generationScript = Path.Combine(TimesheetPythonModulesPath, generationScriptPath);
-            var spreadsheet = LoadScript(generationScript);
-            return spreadsheet.generate_spreadsheet(spreadsheetPath, workingHours);
+            var spreadsheetScript = LoadScript(spreadsheetGeneratorScript);
+            return spreadsheetScript.generate_spreadsheet(spreadsheetPath, workingHours);
         }
 
         private IEnumerable<string> UploadFile(IRootPathProvider pathProvider)
