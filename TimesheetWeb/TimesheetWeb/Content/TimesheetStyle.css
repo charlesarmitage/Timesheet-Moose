@@ -1,4 +1,7 @@
-﻿body {
+﻿body 
+{
+    color: #00688B;
+    background-color: #8DEEEE;
     font: 18px/1.5 Helvetica, Verdana, sans-serif;
     margin-left: auto;
     margin-right: auto;
@@ -28,8 +31,14 @@
 }
 
 .week {
-    background-color: #5CACEE;
+    background-color: #00BFFF;
     width: 540px;
+    margin: 10px;
+    padding-left: 1px;
+    padding-right: 1px;
+    padding-bottom: 1px;
+    -webkit-border-radius: 8px;
+    -moz-border-radius:5px;
 }
 
 table {
@@ -41,13 +50,18 @@ table {
 }
 
 thead {
-	background-color: #C6E2FF;
-	border-bottom: 2px solid #3A5FCD;
+	/*background-color: #C6E2FF;*/
+    background-color: #00BFFF;
+    color:#FFF;
+    font-family:'Helvetica Neue',Arial,sans-serif;
+    font-size:16px;
+	font-weight:700;
+	border-bottom: 2px solid #00BFFF;
 }
 
 tr
 {
-	border-bottom: 1px solid #C6E2FF;
+    border-bottom: 1px solid #BFEFFF;
 }
 
 .hours tr:hover {
