@@ -5,20 +5,25 @@ import reportoutput
 import textreportwriter
 import estimatedhoursinweeks
 
-def write_hours_to_report(xls_file, hours):
-    #writer = reportoutput.build_ipy_writer(xls_file)
-    writer = textreportwriter.build_text_writer(xls_file)
+def build_text_writer(xls_file):
+	return textreportwriter.build_text_writer(xls_file)
+
+def build_xls_writer(xls_file):
+	return reportoutput.build_ipy_writer(xls_file)
+
+def write_hours_to_report(hours):
     for estimated_hours in hours:
         writer.write(estimated_hours)
 
-    writer.close()
+    # TODO: Implement saving the file as an .xlsx file
+    #writer.close()
 
 def write_hours(xls_file, weeks):
 	hours = []
 	for week in weeks:
 		hours.extend(week)
 
-	write_hours_to_report(xls_file, hours)
+	write_hours_to_report(hours)
 
 def generate_spreadsheet(xls_file, weeks):
 	if not xls_file:
@@ -39,4 +44,5 @@ if __name__ == '__main__':
 	weeks = estimatedhoursinweeks.generate_estimated_hours(logfile)
 	xls_file = sys.argv[2]
 
+	writer = textreportwriter.build_text_writer(xls_file)
 	generate_spreadsheet(xls_file, weeks)

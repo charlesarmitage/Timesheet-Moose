@@ -93,6 +93,9 @@ namespace TimesheetWeb
             var workingHours = workingHoursScript.generate_estimated_hours(timesheetLog);
 
             var spreadsheetScript = LoadScript(spreadsheetGeneratorScript);
+
+            // TODO: Make selection of writer configurable via xml configuration
+            spreadsheetScript.writer = spreadsheetScript.build_xls_writer(spreadsheetPath);
             return spreadsheetScript.generate_spreadsheet(spreadsheetPath, workingHours);
         }
 
