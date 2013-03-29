@@ -19,6 +19,9 @@ namespace TimesheetWeb
 
         [XmlElement("spreadsheet_generator", typeof(TimesheetWeeksfeed))]
         public TimesheetWeeksfeed SpreadsheetGenerator { get; set; }
+
+        [XmlElement("writer_type", typeof (TimesheetWriterType))]
+        public TimesheetWriterType WriterType { get; set; }
     }
 
     [System.SerializableAttribute]
@@ -55,5 +58,13 @@ namespace TimesheetWeb
 
         [XmlAttribute("filename")]
         public string Filename { get; set; }
+    }
+
+    [System.SerializableAttribute]
+    [XmlType]
+    public class TimesheetWriterType
+    {
+        [XmlAttribute("type")]
+        public string Type { get; set; }
     }
 }

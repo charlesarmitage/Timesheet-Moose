@@ -24,6 +24,7 @@ namespace TimesheetWeb
         private string timesheetLog;
         private string timesheetPythonModulesPath;
         private TimesheetConfig config;
+        private string timesheetWriterType;
 
         public TimesheetModule(IRootPathProvider pathProvider)
         {
@@ -79,6 +80,7 @@ namespace TimesheetWeb
             timesheetPythonModulesPath = Path.Combine(pathProvider.GetRootPath(), config.Module.Relativepath);
             estimatedHoursScript = Path.Combine(timesheetPythonModulesPath, config.WeeksFeed.Filename);
             spreadsheetGeneratorScript = Path.Combine(timesheetPythonModulesPath, config.SpreadsheetGenerator.Filename);
+            timesheetWriterType = config.WriterType.Type ?? string.Empty;
         }
 
         private dynamic GenerateWorkingHours(string timesheetLogPath)
@@ -93,9 +95,15 @@ namespace TimesheetWeb
             var workingHours = workingHoursScript.generate_estimated_hours(timesheetLog);
 
             var spreadsheetScript = LoadScript(spreadsheetGeneratorScript);
+            if (timesheetWriterType == "xls_writer")
+            {
+                spreadsheetScript.writer = spreadsheetScript.build_xls_writer(spreadsheetPath);
+            }
+            else
+            {
+                spreadsheetScript.writer = spreadsheetScript.build_text_writer(spreadsheetPath);
+            }
 
-            // TODO: Make selection of writer configurable via xml configuration
-            spreadsheetScript.writer = spreadsheetScript.build_xls_writer(spreadsheetPath);
             return spreadsheetScript.generate_spreadsheet(spreadsheetPath, workingHours);
         }
 
