@@ -19,7 +19,12 @@ TO DO
 	 	- Display log file used to generate estimated hours - DONE
 		- Refactor configuration and display of tables - DONE
 		- TODO: User can configure the location of their timesheet.log
-		- TODO: User can download an Excel spreadsheet version of their timesheet
+		- User can download an Excel spreadsheet version of their timesheet - DONE
+
+	- User should be able to install GUI front end
+		- Make web app standalone
+		- Create build and deployment infrastructure
+
 	- User should be able to edit the times in the timesheet
 	- User should be able to save the timesheet for later viewing
 	- User should be able to create an excel version of the timesheet
