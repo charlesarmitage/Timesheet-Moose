@@ -95,7 +95,7 @@ namespace TimesheetWeb
             var workingHours = workingHoursScript.generate_estimated_hours(timesheetLog);
 
             var spreadsheetScript = LoadScript(spreadsheetGeneratorScript);
-            if (timesheetWriterType == "xls_writer")
+            if (timesheetWriterType == "xls")
             {
                 spreadsheetScript.writer = spreadsheetScript.build_xls_writer(spreadsheetPath);
             }
@@ -137,7 +137,8 @@ namespace TimesheetWeb
             Func<Stream> file = () => new FileStream(path, FileMode.Open);
 
             var response = new StreamResponse(file, mimeType);
-            return response.AsAttachment(fileName);
+            var fileInfo = new FileInfo(path);
+            return response.AsAttachment(fileInfo.Name);
         }
 
         private dynamic LoadScript(string ironPythonScript)

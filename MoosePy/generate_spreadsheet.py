@@ -15,24 +15,17 @@ def write_hours_to_report(hours):
     for estimated_hours in hours:
         writer.write(estimated_hours)
 
-    # TODO: Implement saving the file as an .xlsx file
-    #writer.close()
+    writer.close()
 
-def write_hours(xls_file, weeks):
+def write_hours(weeks):
 	hours = []
 	for week in weeks:
 		hours.extend(week)
 
 	write_hours_to_report(hours)
 
-def generate_spreadsheet(xls_file, weeks):
-	if not xls_file:
-		return ""
-
-	output_file = r"C:\git\generated_timesheet.xlsx"
-	shutil.copyfile(xls_file, output_file)
-
-	write_hours(output_file, weeks)
+def generate_spreadsheet(output_file, weeks):
+	write_hours(weeks)
 	return output_file
 
 if __name__ == '__main__':
@@ -44,5 +37,8 @@ if __name__ == '__main__':
 	weeks = estimatedhoursinweeks.generate_estimated_hours(logfile)
 	xls_file = sys.argv[2]
 
+	output_file = r"C:\git\generated_timesheet.xlsx"
+	shutil.copyfile(xls_file, output_file)
+
 	writer = textreportwriter.build_text_writer(xls_file)
-	generate_spreadsheet(xls_file, weeks)
+	generate_spreadsheet(output_file, weeks)

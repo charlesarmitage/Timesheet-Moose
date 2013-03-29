@@ -27,6 +27,7 @@ namespace MooseXLSReports
             GC.Collect();
             GC.WaitForPendingFinalizers();
 
+            workbook.Save();
             workbook.Close(SaveChanges: true);
             Marshal.FinalReleaseComObject(workbook);
 
