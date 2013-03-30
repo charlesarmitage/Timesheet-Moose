@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimesheetWeb", "TimesheetWeb\TimesheetWeb.csproj", "{0F007DF1-6D04-442D-985D-66404D198214}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimesheetScribeApp", "TimesheetWebApp\TimesheetScribeApp.csproj", "{68D1F868-5B7E-48DD-B74B-C67AF2345A1D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimesheetScribeApp", "TimesheetApp\TimesheetScribeApp.csproj", "{68D1F868-5B7E-48DD-B74B-C67AF2345A1D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
