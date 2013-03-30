@@ -33,8 +33,7 @@ namespace TimesheetWeb
             Get["/"] = parameters =>
                 {
 	                var workingHours = GenerateWorkingHours(timesheetLog);
-
-
+                    
                     var m = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(DateTime.Now.Month);
                     var output = new ViewOutput { Weeks = workingHours, Month = m, LogFileUrl = timesheetLog };
                     return View["TimesheetIndex.cshtml", output];
@@ -43,8 +42,7 @@ namespace TimesheetWeb
             Post["/logurl"] = parameters =>
                 {
                     var workingHours = GenerateWorkingHours(timesheetLog);
-
-
+                    
                     var m = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(DateTime.Now.Month);
                     var output = new ViewOutput { Weeks = workingHours, Month = m, LogFileUrl = timesheetLog };
                     return View["TimesheetIndex.cshtml", output];
