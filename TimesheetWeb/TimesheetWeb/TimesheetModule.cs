@@ -26,6 +26,10 @@ namespace TimesheetWeb
         private TimesheetConfig config;
         private string timesheetWriterType;
 
+        public TimesheetModule()
+        {
+        }
+
         public TimesheetModule(IRootPathProvider pathProvider)
         {
             ConfigureTimesheetModules(pathProvider);
