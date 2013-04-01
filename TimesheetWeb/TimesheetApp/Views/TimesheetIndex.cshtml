@@ -1,0 +1,51 @@
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+    <link rel="stylesheet" type="text/css" href="content/TimesheetStyle.css"/>
+    <title>Timesheet Scribe</title>
+    <script type="text/javascript">
+    function getFile(){
+        document.getElementById("input_spreadsheet").click();
+    }
+
+    function updateSpreadsheet(inputObject) {
+        var fileName = inputObject.value.split("\\");
+        document.getElementById("spreadsheet_filename").innerHTML = "Using: " + fileName[fileName.length - 1];
+    }
+    </script>
+</head>
+<body>
+    @model TimesheetWeb.ViewOutput
+
+    <h1>Timesheet: Estimated Hours</h1>
+
+    <form id="logfileurl" method="POST" action="logurl">
+        <input type="text" class="styled-button" name="logfileurl" />
+        <input type="submit" class="styled-button" value="Use alternative log file"/>
+    </form>
+    <p>Using timesheet log: @Model.LogFileUrl</p>
+    
+    <form action="update_spreadsheet" method="POST" enctype="multipart/form-data">
+        <input type="file" class="styled-button" name="input_spreadsheet" id="input_spreadsheet" onchange="updateSpreadsheet(this)"/>
+        <div id="spreadsheet_filename">Using:</div>
+        <input type="button" class="styled-button" onclick="getFile()" value="Select Spreadsheet"/>
+        <input type="submit" class="styled-button" name="update_spreadsheet"  value="Update Spreadsheet"/>
+    </form>
+
+    <h2>Month: @Model.Month</h2>
+    @foreach (var week in Model.Weeks)
+    {
+        <div class="week">
+            <table>
+                <thead>
+                    <tr><td>Date</td><td>Start</td><td>End</td></tr>
+                </thead>
+                <tbody class="hours">
+                    @foreach (var hour in week)
+                    {
+                        <tr><td>@hour.date</td><td>@hour.start</td><td>@hour.end</td></tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</body>
