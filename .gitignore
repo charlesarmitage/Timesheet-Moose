@@ -72,7 +72,7 @@ local.properties
 *.dotCover
 
 # NuGet Packages
-\packages/*
+packages/
 !packages/repositories.config
 
 # Visual C++ cache files
