@@ -58,8 +58,27 @@
     <MSBuild Projects="@(ProjectFiles)" />
   </Target>
 
+  <Target Name="CreateNightlyZip">
+    <PropertyGroup>
+      <StringDate>$([System.DateTime]::Now.ToString('yyyyMMdd'))</StringDate>
+      <ReleasePath>$(MSBuildProjectDirectory)\bin\Release</ReleasePath>
+      <NightlyBuildPath>$(ReleasePath)</NightlyBuildPath>
+      <NightlyZipName>Timesheet</NightlyZipName>
+    </PropertyGroup>
+    <ItemGroup>
+      <ReleaseApplicationFiles Include="$(ReleasePath)\**\*.*" Exclude="$(ReleasePath)\*vshost.exe*" />
+    </ItemGroup>
+
+    <MakeDir Directories="$(NightlyBuildPath)"/>
+    <Zip Files="@(ReleaseApplicationFiles)"
+          WorkingDirectory="$(ReleasePath)"
+          ZipFileName="$(NightlyBuildPath)\$(StringDate)_$(NightlyZipName).zip"
+          ZipLevel="9" />
+  </Target>
+
   <Target Name="Build">
     <CallTarget Targets="Compile" />
+    <CallTarget Targets="CreateNightlyZip" />
   </Target>
 
 </Project>
