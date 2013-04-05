@@ -61,13 +61,16 @@
   <Target Name="CreateNightlyZip">
     <PropertyGroup>
       <StringDate>$([System.DateTime]::Now.ToString('yyyyMMdd'))</StringDate>
-      <ReleasePath>$(MSBuildProjectDirectory)\bin\Release</ReleasePath>
+      <ReleasePath>$(MSBuildProjectDirectory)\TimesheetApp\bin\Release</ReleasePath>
       <NightlyBuildPath>$(ReleasePath)</NightlyBuildPath>
       <NightlyZipName>Timesheet</NightlyZipName>
     </PropertyGroup>
     <ItemGroup>
-      <ReleaseApplicationFiles Include="$(ReleasePath)\**\*.*" Exclude="$(ReleasePath)\*vshost.exe*" />
+      <ReleaseApplicationFiles Include="$(ReleasePath)\**\*.*" Exclude="$(ReleasePath)\*.pdb" />
     </ItemGroup>
+
+    <Message Text="MSBuildProjectDirectory = $(MSBuildProjectDirectory)" />
+    <Message Text="ReleasePath = $(ReleasePath)" />
 
     <MakeDir Directories="$(NightlyBuildPath)"/>
     <Zip Files="@(ReleaseApplicationFiles)"
