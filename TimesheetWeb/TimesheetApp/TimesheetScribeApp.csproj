@@ -115,6 +115,62 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Content Include="..\..\MoosePy\estimatedhoursinweeks.py">
+      <Link>MoosePy\estimatedhoursinweeks.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\MoosePy\generate_spreadsheet.py">
+      <Link>MoosePy\generate_spreadsheet.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\MoosePy\MooseXLSReports.dll">
+      <Link>MoosePy\MooseXLSReports.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\MoosePy\reportoutput.py">
+      <Link>MoosePy\reportoutput.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\MoosePy\textreportwriter.py">
+      <Link>MoosePy\textreportwriter.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\MoosePy\workinghours\hours_aggregation.py">
+      <Link>MoosePy\workinghours\hours_aggregation.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\MoosePy\workinghours\hours_estimator.py">
+      <Link>MoosePy\workinghours\hours_estimator.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\MoosePy\workinghours\hours_feed.py">
+      <Link>MoosePy\workinghours\hours_feed.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\MoosePy\workinghours\hours_filtering.py">
+      <Link>MoosePy\workinghours\hours_filtering.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\MoosePy\workinghours\hours_input.py">
+      <Link>MoosePy\workinghours\hours_input.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\MoosePy\workinghours\hours_normalization.py">
+      <Link>MoosePy\workinghours\hours_normalization.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\MoosePy\workinghours\test_hours_aggregation.py">
+      <Link>MoosePy\workinghours\test_hours_aggregation.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\MoosePy\workinghours\workhours.py">
+      <Link>MoosePy\workinghours\workhours.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\MoosePy\workinghours\__init__.py">
+      <Link>MoosePy\workinghours\__init__.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Views\TimesheetIndex.cshtml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
