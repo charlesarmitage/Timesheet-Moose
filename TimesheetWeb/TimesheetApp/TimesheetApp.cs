@@ -1,13 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using Nancy;
 using TimesheetWeb;
 
 namespace TimesheetWebApp
@@ -19,7 +11,7 @@ namespace TimesheetWebApp
             InitializeComponent();
 
             var nancyHost = new Nancy.Hosting.Self.NancyHost(new Uri("http://localhost:41978"));
-            TimesheetModule module = new TimesheetModule();
+            var module = new TimesheetModule(); // Force loading of TimesheetModule dll so that Nancy can find it.
             nancyHost.Start();
 
             // TODO: Rename to TimeClerk for app name
