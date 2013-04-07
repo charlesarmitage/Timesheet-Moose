@@ -28,24 +28,24 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
+            this.addressTextbox = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // label1
+            // addressTextbox
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 13);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(250, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Timesheet standalone: Navigate to localhost:45680";
+            this.addressTextbox.AutoSize = true;
+            this.addressTextbox.Location = new System.Drawing.Point(13, 13);
+            this.addressTextbox.Name = "addressTextbox";
+            this.addressTextbox.Size = new System.Drawing.Size(114, 13);
+            this.addressTextbox.TabIndex = 0;
+            this.addressTextbox.Text = "Timesheet standalone.";
             // 
             // TimesheetApp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(289, 65);
-            this.Controls.Add(this.label1);
+            this.ClientSize = new System.Drawing.Size(342, 94);
+            this.Controls.Add(this.addressTextbox);
             this.Name = "TimesheetApp";
             this.Text = "Timesheet Standalone";
             this.ResumeLayout(false);
@@ -55,7 +55,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label addressTextbox;
     }
 }
 

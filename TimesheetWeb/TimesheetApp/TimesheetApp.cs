@@ -11,7 +11,9 @@ namespace TimesheetWebApp
         {
             InitializeComponent();
 
-            var nancyHost = new Nancy.Hosting.Self.NancyHost(new Uri("http://localhost:41978"));
+            const string appAddress = "http://localhost:41978";
+            var nancyHost = new Nancy.Hosting.Self.NancyHost(new Uri(appAddress));
+
 #if DEBUG
             var module = new TimesheetModule(); // Force loading of TimesheetModule dll so that Nancy can find it.
 #endif
@@ -19,6 +21,8 @@ namespace TimesheetWebApp
 
             // TODO: Rename to TimeClerk for app name
 
+            MethodInvoker textUpdate = () => this.addressTextbox.Text = @"Timesheet Standalone. Navigate to: " + appAddress;
+            this.Load += (sender, args) => this.addressTextbox.Invoke(textUpdate); ;
             this.FormClosed += (sender, args) => nancyHost.Stop();
         }
 
