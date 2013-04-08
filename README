@@ -21,30 +21,31 @@ TO DO
 		- TODO: User can configure the location of their timesheet.log
 		- User can download an Excel spreadsheet version of their timesheet - DONE
 
+2. Make web app standalone
 	- User should be able to install GUI front end
 		- Make web app standalone
 		- Create build and deployment infrastructure
+			- Deploy as zip file - DONE
+	- User should be able to run .exe and use browser to interact with Timesheet program
+		- Standalone .exe hosting - DONE
 
+3. User should be able to edit the time data
 	- User should be able to edit the times in the timesheet
 	- User should be able to save the timesheet for later viewing
 	- User should be able to create an excel version of the timesheet
 
-2. Make front end user specific
+4. Make front end user specific
 	- User should be able to log on and view their timesheet
 	- User should be able to log off
 
-3. Automatically fill in public holidays
+5. Automatically fill in public holidays
 	- User should see public holidays already accounted for in timesheet
 	- User's excel version should have public holidays accounted for
 
-4. Automatically fill in holidays from online holiday tracker
+6. Automatically fill in holidays from online holiday tracker
 	- User can use third party holiday tracker plugin
 	- User can log in to third party holiday tracker
 	- User can import holiday information into timesheet
-
-5. Make web app standalone
-	- User should be able to install a single .exe (or .exe plus some packages)
-	- User should be able to run .exe and use browser to interact with Timesheet program
 
 License
 -------
