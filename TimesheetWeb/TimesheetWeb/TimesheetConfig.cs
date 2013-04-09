@@ -1,6 +1,6 @@
 ﻿using System.Xml.Serialization;
 
-namespace TimesheetWeb
+namespace TimesheetWebApp
 {
     [System.SerializableAttribute]
     [XmlType]

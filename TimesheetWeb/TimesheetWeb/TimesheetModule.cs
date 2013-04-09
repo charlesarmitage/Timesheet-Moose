@@ -8,7 +8,7 @@ using IronPython.Hosting;
 using Nancy;
 using Nancy.Responses;
 
-namespace TimesheetWeb
+namespace TimesheetWebApp
 {
     public class ViewOutput
     {
