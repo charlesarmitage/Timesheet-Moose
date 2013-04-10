@@ -89,7 +89,7 @@
     <Reference Include="Nancy.Hosting.Self">
       <HintPath>..\packages\Nancy.Hosting.Self.0.16.1\lib\net40\Nancy.Hosting.Self.dll</HintPath>
     </Reference>
-    <Reference Include="Nancy.ViewEngines.Razor">
+    <Reference Include="Nancy.ViewEngines.Razor, Version=0.16.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Nancy.Viewengines.Razor.0.16.3\lib\net40\Nancy.ViewEngines.Razor.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -97,7 +97,7 @@
     <Reference Include="System.Web.Razor">
       <HintPath>..\packages\System.Web.Razor.Unofficial.2.0.1\lib\net40\System.Web.Razor.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.Razor.Unofficial">
+    <Reference Include="System.Web.Razor.Unofficial, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Web.Razor.Unofficial.2.0.2\lib\net40\System.Web.Razor.Unofficial.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq" />
@@ -175,6 +175,10 @@
       <Link>MoosePy\textreportwriter.py</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="..\..\MoosePy\workbooknav.py">
+      <Link>MoosePy\workbooknav.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="..\..\MoosePy\workinghours\hours_aggregation.py">
       <Link>MoosePy\workinghours\hours_aggregation.py</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -214,7 +218,13 @@
     <Content Include="Views\TimesheetIndex.cshtml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="timesheet.config" />
+    <None Include="timesheet.config">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\TestView.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="web.config" />
   </ItemGroup>
   <ItemGroup>

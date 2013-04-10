@@ -1,0 +1,18 @@
+﻿<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+    <link rel="stylesheet" type="text/css" href="content/TimesheetStyle.css"/>
+    <title>Timesheet Scribe</title>
+    <script type="text/javascript">
+    function getFile(){
+        document.getElementById("input_spreadsheet").click();
+    }
+
+    function updateSpreadsheet(inputObject) {
+        var fileName = inputObject.value.split("\\");
+        document.getElementById("spreadsheet_filename").innerHTML = "Using: " + fileName[fileName.length - 1];
+    }
+    </script>
+</head>
+<body>
+View works!
+</body>

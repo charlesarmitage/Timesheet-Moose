@@ -35,22 +35,22 @@ namespace TimesheetWebApp
             ConfigureTimesheetModules(pathProvider);
 
             Get["/"] = parameters =>
-                {
-	                var workingHours = GenerateWorkingHours(timesheetLog);
-                    
-                    var m = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(DateTime.Now.Month);
-                    var output = new ViewOutput { Weeks = workingHours, Month = m, LogFileUrl = timesheetLog };
-                    return View["TimesheetIndex.cshtml", output];
-                };
+            {
+                var workingHours = GenerateWorkingHours(timesheetLog);
+
+                var m = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(DateTime.Now.Month);
+                var output = new ViewOutput { Weeks = workingHours, Month = m, LogFileUrl = timesheetLog };
+                return View["TimesheetIndex.cshtml", output];
+            };
 
             Post["/logurl"] = parameters =>
-                {
-                    var workingHours = GenerateWorkingHours(timesheetLog);
-                    
-                    var m = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(DateTime.Now.Month);
-                    var output = new ViewOutput { Weeks = workingHours, Month = m, LogFileUrl = timesheetLog };
-                    return View["TimesheetIndex.cshtml", output];
-                };
+            {
+                var workingHours = GenerateWorkingHours(timesheetLog);
+
+                var m = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(DateTime.Now.Month);
+                var output = new ViewOutput { Weeks = workingHours, Month = m, LogFileUrl = timesheetLog };
+                return View["TimesheetIndex.cshtml", output];
+            };
 
             Post["/update_spreadsheet"] = parameters =>
             {
@@ -59,7 +59,7 @@ namespace TimesheetWebApp
                 var spreadsheet = uploadedFiles.FirstOrDefault() ?? string.Empty;
                 string fileName = GenerateSpreadheet(spreadsheet);
 
-                if(fileName != string.Empty)
+                if (fileName != string.Empty)
                     return BuildFileDownloadResponse(pathProvider, fileName);
                 else
                     return "Invalid file";
@@ -72,8 +72,8 @@ namespace TimesheetWebApp
             config = new TimesheetConfig();
             using (var timesheetStream = new StreamReader(configPath))
             {
-                var configXml = new XmlSerializer(typeof (TimesheetConfig));
-                config = (TimesheetConfig) configXml.Deserialize(timesheetStream);
+                var configXml = new XmlSerializer(typeof(TimesheetConfig));
+                config = (TimesheetConfig)configXml.Deserialize(timesheetStream);
                 timesheetStream.Close();
             }
 

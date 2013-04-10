@@ -1,8 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimesheetWeb", "TimesheetWeb\TimesheetWeb.csproj", "{0F007DF1-6D04-442D-985D-66404D198214}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimesheetScribeApp", "TimesheetApp\TimesheetScribeApp.csproj", "{68D1F868-5B7E-48DD-B74B-C67AF2345A1D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{89A40628-973E-4032-9C0F-F0F54BC9FA2A}"
@@ -29,16 +27,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{0F007DF1-6D04-442D-985D-66404D198214}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0F007DF1-6D04-442D-985D-66404D198214}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0F007DF1-6D04-442D-985D-66404D198214}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{0F007DF1-6D04-442D-985D-66404D198214}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{0F007DF1-6D04-442D-985D-66404D198214}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{0F007DF1-6D04-442D-985D-66404D198214}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0F007DF1-6D04-442D-985D-66404D198214}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0F007DF1-6D04-442D-985D-66404D198214}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{0F007DF1-6D04-442D-985D-66404D198214}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{0F007DF1-6D04-442D-985D-66404D198214}.Release|x86.ActiveCfg = Release|Any CPU
 		{68D1F868-5B7E-48DD-B74B-C67AF2345A1D}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{68D1F868-5B7E-48DD-B74B-C67AF2345A1D}.Debug|Any CPU.Build.0 = Debug|x86
 		{68D1F868-5B7E-48DD-B74B-C67AF2345A1D}.Debug|Mixed Platforms.ActiveCfg = Debug|x86

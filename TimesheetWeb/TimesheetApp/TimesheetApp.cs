@@ -14,9 +14,6 @@ namespace TimesheetWebApp
             const string appAddress = "http://localhost:41978";
             var nancyHost = new Nancy.Hosting.Self.NancyHost(new Uri(appAddress));
 
-#if DEBUG
-            var module = new TimesheetModule(); // Force loading of TimesheetModule dll so that Nancy can find it.
-#endif
             nancyHost.Start();
 
             // TODO: Rename to TimeClerk for app name
