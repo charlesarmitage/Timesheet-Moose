@@ -23,7 +23,8 @@ TO DO
 
 2. Make web app standalone
 	- User should be able to install GUI front end
-		- Make web app standalone
+		- Make web app standalone - DONE
+		- Allow user to configure web app deployment
 		- Create build and deployment infrastructure
 			- Deploy as zip file - DONE
 	- User should be able to run .exe and use browser to interact with Timesheet program
