@@ -110,15 +110,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\TimesheetWeb\ScriptLoader.cs">
-      <Link>ScriptLoader.cs</Link>
-    </Compile>
-    <Compile Include="..\TimesheetWeb\TimesheetConfig.cs">
-      <Link>TimesheetConfig.cs</Link>
-    </Compile>
-    <Compile Include="..\TimesheetWeb\TimesheetModule.cs">
-      <Link>TimesheetModule.cs</Link>
-    </Compile>
+    <Compile Include="ScriptLoader.cs" />
     <Compile Include="TimesheetApp.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -129,6 +121,8 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TimesheetConfig.cs" />
+    <Compile Include="TimesheetModule.cs" />
     <EmbeddedResource Include="TimesheetApp.resx">
       <DependentUpon>TimesheetApp.cs</DependentUpon>
     </EmbeddedResource>
