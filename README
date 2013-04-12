@@ -18,7 +18,6 @@ TO DO
 		- Display table of working hours - DONE
 	 	- Display log file used to generate estimated hours - DONE
 		- Refactor configuration and display of tables - DONE
-		- TODO: User can configure the location of their timesheet.log
 		- User can download an Excel spreadsheet version of their timesheet - DONE
 
 2. Make web app standalone
@@ -29,6 +28,14 @@ TO DO
 			- Deploy as zip file - DONE
 	- User should be able to run .exe and use browser to interact with Timesheet program
 		- Standalone .exe hosting - DONE
+
+2a. Refactor web page routes:
+	- Initial page should redirect to a display timetable page.
+	- Use specflow to drive the development of the page
+
+2b. User can configure their application:
+		- User can configure the location of their timesheet.log
+		- User can configure the report writer
 
 3. User should be able to edit the time data
 	- User should be able to edit the times in the timesheet
