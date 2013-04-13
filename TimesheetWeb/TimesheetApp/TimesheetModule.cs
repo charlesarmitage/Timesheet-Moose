@@ -34,7 +34,9 @@ namespace TimesheetWebApp
         {
             ConfigureTimesheetModules(pathProvider);
 
-            Get["/"] = parameters =>
+            Get["/"] = p => View["index.html"];
+
+            Get["/ShowTimesheet"] = parameters =>
             {
                 var workingHours = GenerateWorkingHours(timesheetLog);
 
