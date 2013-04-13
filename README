@@ -30,7 +30,7 @@ TO DO
 		- Standalone .exe hosting - DONE
 
 2a. Refactor web page routes:
-	- Initial page should redirect to a display timetable page.
+	- Initial page should redirect to a display timetable page. - DONE
 	- Use specflow to drive the development of the page
 
 2b. User can configure their application:
