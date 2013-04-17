@@ -63,7 +63,7 @@
       <StringDate>$([System.DateTime]::Now.ToString('yyyyMMdd'))</StringDate>
       <ReleasePath>$(MSBuildProjectDirectory)\TimesheetApp\bin\Release</ReleasePath>
       <NightlyBuildPath>$(ReleasePath)</NightlyBuildPath>
-      <NightlyZipName>Timesheet</NightlyZipName>
+      <NightlyZipName>TimesheetApp</NightlyZipName>
     </PropertyGroup>
     <ItemGroup>
       <ReleaseApplicationFiles Include="$(ReleasePath)\**\*.*" Exclude="$(ReleasePath)\*.pdb" />
@@ -75,7 +75,7 @@
     <MakeDir Directories="$(NightlyBuildPath)"/>
     <Zip Files="@(ReleaseApplicationFiles)"
           WorkingDirectory="$(ReleasePath)"
-          ZipFileName="$(NightlyBuildPath)\$(StringDate)_$(NightlyZipName).zip"
+          ZipFileName="$(NightlyBuildPath)\$(NightlyZipName).zip"
           ZipLevel="9" />
   </Target>
 
