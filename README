@@ -34,8 +34,8 @@ TO DO
 	- Use specflow to drive the development of the page
 
 2b. User can configure their application:
-		- User can configure the location of their timesheet.log
-		- User can configure the report writer
+	- User can configure the location of their timesheet.log
+	- User can configure the report writer
 
 3. User should be able to edit the time data
 	- User should be able to edit the times in the timesheet
