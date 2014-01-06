@@ -19,6 +19,7 @@ class workbooknavigator:
 		self.requested_date = requested_date
 		self.setsheet_from_date(self.requested_date)
 		self.rowsbetweenweeks = 16
+		self.startofmonthnumber = 1
 
 	def sheetname(self):
 		return self.sheet_name
