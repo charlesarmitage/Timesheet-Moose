@@ -4,6 +4,7 @@ from workinghours import hours_filtering
 from workinghours import workhours
 import datetime
 from datetime import datetime
+import workbooknav
 
 def new_working_hours_on(date, start, end):
     hours = workhours.WorkingHours()
@@ -63,4 +64,12 @@ class TestHoursFiltering(unittest.TestCase):
         assert previousworksheetmonth in result
         assert previousmonth not in result
         assert nextcalendarmonth not in result
+
+    # TODO: move into seperate test file
+    def test_will_use_default_date_from_workbooknav(self):
+        workbook = workbooknav.workbooknavigator(datetime(3000, 3, 22))
+        
+        assert workbook.startofmonthnumber == 0
+        assert workbook.sheet_name == "January"
+        assert workbook.startofmonthdate == datetime(datetime.now().year, 1, 1)
 

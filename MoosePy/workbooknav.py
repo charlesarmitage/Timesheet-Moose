@@ -19,7 +19,6 @@ class workbooknavigator:
 		self.requested_date = requested_date
 		self.setsheet_from_date(self.requested_date)
 		self.rowsbetweenweeks = 16
-		self.startofmonthnumber = 1
 
 	def sheetname(self):
 		return self.sheet_name
@@ -38,9 +37,15 @@ class workbooknavigator:
 
 	def setsheet_from_date(self, day):
 		self.requested_date = day.date()
+		self.set_default_start_dates()
 
 		for d in reversed(self.startingdates):
 			if day.date() <= d[1].date():
 				self.sheet_name = d[0]
 				self.startofmonthdate = d[1]
 				self.startofmonthnumber = self.startingdates.index(d)
+
+	def set_default_start_dates(self):
+		self.sheet_name = "January"
+		self.startofmonthdate = datetime(datetime.now().year, 1, 1)
+		self.startofmonthnumber = 0
