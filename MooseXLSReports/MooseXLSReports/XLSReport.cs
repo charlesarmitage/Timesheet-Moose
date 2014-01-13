@@ -89,7 +89,7 @@ namespace MooseXLSReports
 
         private dynamic GetTimesheetCell(DateTime date, string column)
         {
-            var rowPosition = new WorkbookNavigator(date);
+            var rowPosition = new WorkbookNavigator(date, WorksheetDates.GetStartDatesForWorksheets());
             Console.WriteLine("Row: {0}", rowPosition.Row);
             var cell = string.Format("{0}{1}", column, rowPosition.Row);
             var worksheets = excel.Worksheets;
