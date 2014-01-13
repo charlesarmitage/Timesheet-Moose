@@ -16,8 +16,8 @@ def remove_weekends(hours):
 
 def filter_by__current_worksheet_month(day, raw_hours):
     workbook = workbooknav.workbooknavigator(day)
-    month = workbook.startofmonthnumber
+    month = max(1, workbook.startofmonthnumber)
 
     hours = filter_by_month(raw_hours, month)
-    hours.extend( filter_by_month(raw_hours, month - 1) ) # TODO: Handle january
+    hours.extend( filter_by_month(raw_hours, month - 1) )
     return hours

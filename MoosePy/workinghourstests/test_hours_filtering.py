@@ -65,6 +65,14 @@ class TestHoursFiltering(unittest.TestCase):
         assert previousmonth not in result
         assert nextcalendarmonth not in result
 
+    def test_will_filter_for_january(self):
+        start_of_january = workhours.build_from_date(datetime(2014, 1, 1))
+        hours = [start_of_january]
+
+        result = hours_filtering.filter_by__current_worksheet_month(datetime(2014, 1, 1), hours)
+
+        assert start_of_january in result
+
     # TODO: move into seperate test file
     def test_will_use_default_date_from_workbooknav(self):
         workbook = workbooknav.workbooknavigator(datetime(3000, 3, 22))
